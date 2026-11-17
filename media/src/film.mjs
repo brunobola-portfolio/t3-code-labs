@@ -7,7 +7,7 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { spawn } from "node:child_process";
-import { join, dirname, extname, normalize } from "node:path";
+import { join, dirname, extname, normalize, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import os from "node:os";
 import { FPS, DURATION } from "./timeline.mjs";
@@ -29,8 +29,8 @@ export function chromePath() {
 
 export async function openFilm() {
   const server = createServer(async (req, res) => {
-    const path = normalize(join(HERE, decodeURIComponent(new URL(req.url, "http://x").pathname)));
-    if (!path.startsWith(HERE)) { res.writeHead(403).end(); return; }
+    const path = resolve(HERE, "." + decodeURIComponent(new URL(req.url, "http://x").pathname));
+    if (!path.startsWith(resolve(HERE) + sep) || !(extname(path) in TYPES)) { res.writeHead(403).end(); return; }
     let body;
     try { body = await readFile(path); } catch { res.writeHead(404).end(); return; }
     res.writeHead(200, { "content-type": TYPES[extname(path)] ?? "application/octet-stream" }).end(body);
