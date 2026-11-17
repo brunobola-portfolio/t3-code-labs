@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>T3 Code Labs film</title>
+<style>
+  :root { --bg:#121110; --ink:#F3EFE9; --mute:#A9A39A; --clay:#D97757; --ok:#6DBE8C; --warn:#E0A458; --err:#E5644E; }
+  * { box-sizing:border-box; margin:0; }
+  html,body { width:1920px; height:1080px; overflow:hidden; background:var(--bg); }
+  body { font-family:"Segoe UI Variable Display","Segoe UI",Inter,system-ui,sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  canvas { position:absolute; inset:0; }
+  .layer { position:absolute; inset:0; pointer-events:none; }
+  .t { position:absolute; opacity:0; will-change:transform,opacity; white-space:nowrap; }
+  .brand { font-weight:700; letter-spacing:-.035em; }
+  .badge { display:inline-block; font-size:.34em; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--clay); background:rgba(217,119,87,.14); border:2px solid rgba(217,119,87,.45); border-radius:.35em;
+    padding:.28em .5em .24em; vertical-align:middle; margin-left:.35em; position:relative; top:-.12em; }
+  .eyebrow { font-size:22px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--clay); }
+  .h { font-size:64px; font-weight:700; letter-spacing:-.03em; line-height:1.05; }
+  .p { font-size:28px; color:var(--mute); line-height:1.4; }
+  .chip { display:inline-flex; align-items:center; gap:10px; font-size:22px; font-weight:600; padding:10px 18px; border-radius:999px;
+    background:rgba(255,255,255,.05); border:1.5px solid rgba(255,255,255,.1); margin-right:12px; transition:none; }
+  .chip i { width:14px; height:14px; border-radius:50%; display:inline-block; }
+  .label { font-size:22px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:10px 16px; border-radius:10px;
+    background:rgba(18,17,16,.82); border:1.5px solid rgba(255,255,255,.12); backdrop-filter:blur(6px); }
+  .code { font-family:"Cascadia Code","Consolas",monospace; font-size:30px; padding:22px 30px; border-radius:16px;
+    background:#1c1b19; border:1.5px solid rgba(255,255,255,.1); color:#EDE7DF; }
+  .code b { color:var(--clay); font-weight:500; }
+  .small { font-size:22px; color:var(--mute); }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div class="layer" id="ui">
+  <!-- intro -->
+  <div class="t" id="introBrand" style="left:0;right:0;top:390px;text-align:center;font-size:150px"><span class="brand" id="typed"></span><span class="badge" id="introBadge">Labs</span></div>
+  <div class="t p" id="introSub" style="left:0;right:0;top:600px;text-align:center;font-size:34px">A premium, observability-first theme for T3 Code</div>
+  <div class="t small" id="introFoot" style="left:0;right:0;top:980px;text-align:center">One JSON file · no fork · dark &amp; light</div>
+
+  <!-- section titles -->
+  <div class="t" id="secTitle" style="left:120px;top:96px">
+    <div class="eyebrow" id="secEyebrow"></div>
+    <div class="h" id="secH" style="margin-top:14px"></div>
+    <div class="p" id="secP" style="margin-top:16px;white-space:normal;width:560px"></div>
+    <div id="secChips" style="margin-top:34px"></div>
+  </div>
+
+  <!-- before/after labels -->
+  <div class="t label" id="lblBefore" style="left:250px;top:112px">Before · stock T3 Code</div>
+  <div class="t label" id="lblAfter" style="right:250px;top:112px;color:var(--clay)">After · T3 Code Labs</div>
+  <div class="t label" id="lblDark" style="left:250px;top:184px">Dark</div>
+  <div class="t label" id="lblLight" style="right:250px;top:184px;color:#3d3d3a;background:rgba(250,249,245,.9);border-color:rgba(0,0,0,.1)">Light</div>
+
+  <!-- outro -->
+  <div class="t" id="outro" style="left:0;right:0;top:250px;text-align:center">
+    <div style="font-size:110px"><span class="brand">T3 Code</span><span class="badge">Labs</span></div>
+    <div class="p" style="margin-top:26px">Install in one line</div>
+    <div style="margin-top:22px;display:inline-block" class="code"><b>t3</b> theme set ./t3-code-labs.json</div>
+    <div class="small" style="margin-top:64px">github.com/brunobola-portfolio/t3-code-labs</div>
+    <div class="small" style="margin-top:12px;opacity:.75">Built on T3 Clawd by @rohit3a (MIT) · Unofficial, not affiliated with T3 Tools Inc.</div>
+  </div>
+</div>
+<script type="module">
+import * as TL from "./timeline.mjs";
+const c = document.getElementById("c"), g = c.getContext("2d");
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = (t) => (t = clamp(t), t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeOut = (t) => 1 - Math.pow(1 - clamp(t), 3);
+const span = (t, a, b) => clamp((t - a) / (b - a));
+// fade in over [a, a+d], out over [b-d, b]
+const win = (t, a, b, d = .45) => Math.min(span(t, a, a + d), 1 - span(t, b - d, b));
+
+// ---- image cache (sequences are big; keep a small window)
+const cache = new Map();
+function img(path) {
+  if (cache.has(path)) return cache.get(path);
+  const p = new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error(path)); i.src = "out/" + path; })
+    .then((i) => i.decode().then(() => i));
+  cache.set(path, p);
+  if (cache.size > 24) cache.delete(cache.keys().next().value);
+  return p;
+}
+const seq = (dir, i) => `seq/${dir}/${String(i).padStart(4, "0")}.png`;
+
+// ---- drawing helpers
+function bg(t) {
+  g.fillStyle = "#121110"; g.fillRect(0, 0, 1920, 1080);
+  const x = 960 + Math.sin(t * .23) * 380, y = 540 + Math.cos(t * .17) * 160;
+  const r = g.createRadialGradient(x, y, 0, x, y, 1100);
+  r.addColorStop(0, "rgba(217,119,87,.20)"); r.addColorStop(.45, "rgba(217,119,87,.05)"); r.addColorStop(1, "rgba(217,119,87,0)");
+  g.fillStyle = r; g.fillRect(0, 0, 1920, 1080);
+  const r2 = g.createRadialGradient(1920 - x * .6, 1080 - y * .4, 0, 1920 - x * .6, 1080 - y * .4, 800);
+  r2.addColorStop(0, "rgba(109,190,140,.06)"); r2.addColorStop(1, "rgba(109,190,140,0)");
+  g.fillStyle = r2; g.fillRect(0, 0, 1920, 1080);
+  // fine dot grid
+  g.fillStyle = "rgba(255,255,255,.035)";
+  for (let gx = 30; gx < 1920; gx += 40) for (let gy = 30; gy < 1080; gy += 40) g.fillRect(gx, gy, 2, 2);
+}
+function rr(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); }
+// Draws src rect of an image into dest rect with rounded corners, shadow, border, optional clip fn.
+function shot(im, s, d, { radius = 22, alpha = 1, clip = null, shadow = true } = {}) {
+  g.save(); g.globalAlpha = alpha;
+  if (shadow) { g.save(); g.shadowColor = "rgba(0,0,0,.55)"; g.shadowBlur = 70; g.shadowOffsetY = 26; rr(d.x, d.y, d.w, d.h, radius); g.fillStyle = "#000"; g.fill(); g.restore(); }
+  rr(d.x, d.y, d.w, d.h, radius); g.clip();
+  if (clip) clip();
+  g.drawImage(im, s.x, s.y, s.w, s.h, d.x, d.y, d.w, d.h);
+  g.restore();
+  g.save(); g.globalAlpha = alpha * .9; rr(d.x + .5, d.y + .5, d.w - 1, d.h - 1, radius); g.strokeStyle = "rgba(255,255,255,.12)"; g.lineWidth = 1.5; g.stroke(); g.restore();
+}
+const FULL = { x: 0, y: 0, w: 1920, h: 1080 };
+const fit = (s, cx, cy, w) => ({ x: cx - w / 2, y: cy - (w * s.h / s.w) / 2, w, h: w * s.h / s.w });
+const mix = (a, b, t) => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), w: lerp(a.w, b.w, t), h: lerp(a.h, b.h, t) });
+function show(id, o, dy = 0, scale = 1) { const e = $(id); e.style.opacity = o; e.style.transform = `translateY(${(1 - o) * 24 + dy}px) scale(${scale})`; }
+function section(t, [a, b], eyebrow, h, p, chips = "") {
+  const o = win(t, a + .15, b, .5);
+  if ($("secEyebrow").textContent !== eyebrow) { $("secEyebrow").textContent = eyebrow; $("secH").innerHTML = h; $("secP").innerHTML = p; $("secChips").innerHTML = chips; }
+  show("secTitle", o);
+  return o;
+}
+
+const ALL = ["introBrand", "introSub", "introFoot", "secTitle", "lblBefore", "lblAfter", "lblDark", "lblLight", "outro"];
+
+async function render(t) {
+  ALL.forEach((id) => ($(id).style.opacity = 0));
+  bg(t);
+  const S = TL.SCENES;
+
+  if (t < S.intro[1]) {
+    const word = "T3 Code", n = Math.round(clamp((t - .4) / 1.1) * word.length);
+    $("typed").textContent = word.slice(0, n) || "​";
+    const bo = easeOut(span(t, 1.75, 2.15));
+    $("introBadge").style.opacity = bo; $("introBadge").style.transform = `scale(${lerp(.6, 1, bo) + Math.sin(span(t, 1.75, 2.4) * Math.PI) * .08})`;
+    show("introBrand", win(t, 0.2, 5, .5)); show("introSub", win(t, 2.6, 5, .5)); show("introFoot", win(t, 3.2, 5, .5));
+  } else if (t < S.beforeAfter[1]) {
+    const [a, b] = S.beforeAfter;
+    const [bef, aft] = await Promise.all([img("stills/thread-before-dark.png"), img("stills/thread-after-dark.png")]);
+    const o = win(t, a, b, .5);
+    const d = fit(FULL, 960, 590 + (1 - easeOut(span(t, a, a + .8))) * 40, 1440 + span(t, a, b) * 40);
+    const w = ease(span(t, ...TL.WIPE));
+    const cut = d.x + d.w * (1 - w);
+    shot(bef, FULL, d, { alpha: o });
+    if (w > 0) {
+      shot(aft, FULL, d, { alpha: o, shadow: false, clip: () => { g.beginPath(); g.rect(cut, d.y, d.x + d.w - cut, d.h); g.clip(); } });
+      g.save(); g.globalAlpha = o * (w < 1 ? 1 : 1 - span(t, TL.WIPE[1], TL.WIPE[1] + .4));
+      g.fillStyle = "#D97757"; g.shadowColor = "rgba(217,119,87,.9)"; g.shadowBlur = 24; g.fillRect(cut - 2, d.y, 4, d.h); g.restore();
+    }
+    show("lblBefore", win(t, a + .5, TL.WIPE[0] + 1.3, .4));
+    show("lblAfter", win(t, TL.WIPE[0] + .7, b, .4));
+  } else if (t < S.meters[1]) {
+    const [a, b] = S.meters, [p0, p1] = TL.METERS_PLAY;
+    const i = Math.round(clamp((t - p0) / (p1 - p0)) * 149);
+    const im = await img(seq("meters", i));
+    const o = win(t, a, b, .5);
+    const zoom = ease(span(t, a, a + 1.2));
+    const src = mix(FULL, { x: 1525, y: 296, w: 390, h: 198 }, zoom);
+    const dst = mix(fit(FULL, 1250, 560, 1100), { x: 790, y: 280, w: 1000, h: 1000 * 198 / 390 }, zoom);
+    shot(im, src, dst, { alpha: o, radius: lerp(22, 28, zoom) });
+    const e = TL.METER_EVENTS, lvl = t >= e[2].t ? 2 : t >= e[0].t ? 1 : 0;
+    const chip = (k, name, col) => `<span class="chip" style="${lvl === k ? `border-color:${col};color:${col};background:${col}22` : "opacity:.5"}"><i style="background:${col}"></i>${name}</span>`;
+    section(t, S.meters, "Observability", "Usage and context,<br>at a glance", "Limits and the context window are colour-coded, so you see a thread filling up before it hits the wall.",
+      chip(0, "Room to spare", "#6DBE8C") + chip(1, "Getting close", "#E0A458") + chip(2, "Nearly out", "#E5644E"));
+    $("secChips").innerHTML = chip(0, "Room to spare", "#6DBE8C") + chip(1, "Getting close", "#E0A458") + chip(2, "Nearly out", "#E5644E");
+    $("secTitle").style.top = "330px";
+  } else if (t < S.composer[1]) {
+    const [a, b] = S.composer, [p0, p1] = TL.COMPOSER_PLAY;
+    const i = Math.round(clamp((t - p0) / (p1 - p0)) * 65);
+    const im = await img(seq("composer", i));
+    const o = win(t, a, b, .5);
+    const zoom = ease(span(t, a, a + 1.2));
+    const src = mix(FULL, { x: 470, y: 455, w: 1060, h: 218 }, zoom);
+    const dst = mix(fit(FULL, 960, 640, 1300), { x: 220, y: 450, w: 1480, h: 1480 * 218 / 1060 }, zoom);
+    shot(im, src, dst, { alpha: o });
+    section(t, S.composer, "Composer", "A composer that feels alive", "A soft accent glow while you type. Checkout, branch and access sit below as chips.");
+    $("secTitle").style.top = "96px";
+  } else if (t < S.menu[1]) {
+    const [a, b] = S.menu;
+    const k = clamp(Math.floor((t - TL.MENU_START) / TL.MENU_STEP), -1, 4);
+    const aft = await (k < 0 ? img("stills/menu-after-dark.png") : img(seq("menu", k)));
+    const o = win(t, a, b, .5);
+    const s = { x: 60, y: 500, w: 560, h: 320 };
+    const pop = easeOut(span(t, a + .1, a + .9));
+    const W = 900 * lerp(.92, 1, pop);
+    shot(aft, s, { x: 1300 - W / 2, y: 540 - (W * s.h / s.w) / 2, w: W, h: W * s.h / s.w }, { alpha: o });
+    section(t, S.menu, "Menus", "Icons where you<br>need them", "Rounded menus with an accent hover, and icons in the multi-select menu. Delete reads red.<br><span style='font-size:20px;opacity:.7'>Menus render in HTML in the web app; desktop menus are native.</span>");
+    $("secTitle").style.top = "300px";
+  } else if (t < S.modes[1]) {
+    const [a, b] = S.modes, [m0, m1] = TL.MODE_SWITCH;
+    const [dk, lt] = await Promise.all([img("stills/thread-after-dark.png"), img("stills/thread-after-light.png")]);
+    const o = win(t, a, b, .5);
+    const d = fit(FULL, 960, 600, 1400 + span(t, a, b) * 50);
+    const w = ease(span(t, m0, m1));
+    shot(dk, FULL, d, { alpha: o });
+    if (w > 0) shot(lt, FULL, d, { alpha: o, shadow: false, clip: () => { g.beginPath(); g.arc(d.x + d.w - 120, d.y + 40, w * 1800, 0, Math.PI * 2); g.clip(); } });
+    show("lblDark", win(t, a + .4, m0 + .3, .4)); show("lblLight", win(t, m1 - .2, b, .4));
+    $("lblDark").style.top = $("lblLight").style.top = "104px";
+  } else {
+    const [a, b] = S.outro;
+    const o = win(t, a, b + .3, .9);
+    show("outro", o);
+  }
+}
+
+// ---- stills for the README (same look as the film)
+async function poster() {
+  ALL.forEach((id) => ($(id).style.opacity = 0));
+  bg(4);
+  const [dk, lt] = await Promise.all([img("stills/thread-after-dark.png"), img("stills/thread-after-light.png")]);
+  shot(lt, FULL, { x: 1010, y: 250, w: 960, h: 540 }, { radius: 18, alpha: .9 });
+  shot(dk, FULL, { x: 780, y: 330, w: 1060, h: 596 }, { radius: 20 });
+  // magnified meters, floating over the screenshot
+  const m = await img(seq("meters", 118));
+  shot(m, { x: 1525, y: 296, w: 390, h: 198 }, { x: 1300, y: 690, w: 560, h: 560 * 198 / 390 }, { radius: 18 });
+  $("secEyebrow").textContent = "A theme for T3 Code";
+  $("secH").innerHTML = `<span style="font-size:118px;letter-spacing:-.04em">T3 Code</span><span class="badge" style="font-size:40px;top:-.9em">Labs</span>`;
+  $("secP").innerHTML = "Warm dark &amp; light palettes, a cleaner sidebar and composer, and colour-coded usage and context meters.";
+  $("secChips").innerHTML = ["#6DBE8C:Room to spare", "#E0A458:Getting close", "#E5644E:Nearly out"]
+    .map((s) => { const [c, n] = s.split(":"); return `<span class="chip" style="border-color:${c}66;color:${c}"><i style="background:${c}"></i>${n}</span>`; }).join("");
+  const st = $("secTitle"); st.style.top = "300px"; st.style.left = "110px"; st.style.opacity = 1; st.style.transform = "none";
+  $("secP").style.width = "620px";
+}
+async function beforeAfter(scheme = "dark") {
+  ALL.forEach((id) => ($(id).style.opacity = 0));
+  bg(2);
+  const [bef, aft] = await Promise.all([img(`stills/thread-before-${scheme}.png`), img(`stills/thread-after-${scheme}.png`)]);
+  shot(bef, FULL, { x: 60, y: 200, w: 880, h: 495 }, { radius: 16 });
+  shot(aft, FULL, { x: 980, y: 200, w: 880, h: 495 }, { radius: 16 });
+  for (const [id, x] of [["lblBefore", 60], ["lblAfter", 980]]) { const e = $(id); e.style.opacity = 1; e.style.transform = "none"; e.style.left = x + "px"; e.style.right = "auto"; e.style.top = "126px"; }
+}
+window.render = render;
+window.poster = poster;
+window.beforeAfter = beforeAfter;
+window.ready = Promise.all([img("stills/thread-before-dark.png")]).then(() => document.fonts.ready).then(() => true);
+</script>
+</body>
+</html>

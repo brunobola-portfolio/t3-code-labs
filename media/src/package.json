@@ -1,0 +1,15 @@
+{
+  "name": "t3-code-labs-media",
+  "private": true,
+  "type": "module",
+  "description": "Renders the README media and launch film for T3 Code Labs from a demo T3 Code instance.",
+  "scripts": {
+    "capture": "node capture.mjs",
+    "film": "node film.mjs",
+    "audio": "node audio.mjs",
+    "all": "node capture.mjs && node audio.mjs && node film.mjs && node gifs.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.65.1"
+  }
+}
