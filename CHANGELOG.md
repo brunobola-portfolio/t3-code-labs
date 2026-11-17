@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- **Media**: launch film (`media/t3-code-labs-film.mp4`, 1080p, synthesized music and sound effects), poster, before/after image and wipe clip, and preview GIFs for the meters, composer, menus and dark/light modes. All captured from a demo T3 Code instance; scripts in `media/src`.
+
 ## [0.1.0] - 2026-11-17
 
 First release: T3 Clawd's layout rebranded as T3 Code Labs, with colour-coded usage and context meters.

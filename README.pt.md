@@ -4,6 +4,8 @@ Um tema premium para o [T3 Code](https://github.com/pingdotgg/t3code), pensado p
 
 [English](README.md)
 
+[![T3 Code Labs: ver o filme de apresentação](media/poster.png)](media/t3-code-labs-film.mp4)
+
 O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá à app cores quentes em tom de barro, uma barra lateral e uma caixa de texto mais limpas, e indicadores de uso e de contexto com cores, para veres de relance quanto de cada limite e da janela de contexto uma conversa já gastou.
 
 ## O que muda
@@ -20,6 +22,22 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 - As barras de limite de uso no cartão de detalhes ficam **verdes** com folga, **âmbar** abaixo de 35% restante e **vermelhas** abaixo de 15%.
 - A barra da janela de contexto passa a **âmbar** a partir de 65% usado e a **vermelho** a partir de 85%, para saberes quando a conversa está a ficar cheia.
 - A caixa de texto ganha um brilho laranja suave enquanto escreves, e as indicações por baixo dela (pasta, branch, permissões) aparecem como etiquetas.
+
+## Pré-visualização
+
+| Indicadores de uso e contexto | Caixa de texto | Menus (web) |
+| --- | --- | --- |
+| ![Indicadores a passar de verde a âmbar e vermelho](media/meters.gif) | ![Brilho e etiquetas da caixa de texto](media/composer.gif) | ![Menu de seleção múltipla com ícones](media/menu.gif) |
+
+| Antes → depois | Escuro ↔ claro |
+| --- | --- |
+| ![Transição do T3 Code original para o T3 Code Labs](media/before-after.gif) | ![Modos escuro e claro](media/dark-light.gif) |
+
+**Antes e depois** (T3 Code original à esquerda, T3 Code Labs à direita)
+
+![Antes e depois](media/before-after.png)
+
+[Ver o filme de apresentação](media/t3-code-labs-film.mp4) (48 s, com som). Toda a interface que aparece é a web app real do T3 Code a correr numa instância de demonstração, montada em HTML; a música e os efeitos sonoros são sintetizados de raiz em cerca de 200 linhas de JavaScript. A [transição antes/depois](media/before-after.mp4) também existe como clip curto. Todos os media usam dados fictícios e podem ser gerados de novo com os scripts em [`media/src`](media/src/README.md).
 
 ## Instalar
 

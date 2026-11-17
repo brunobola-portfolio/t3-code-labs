@@ -4,6 +4,8 @@ A premium, observability-first theme for [T3 Code](https://github.com/pingdotgg/
 
 [Português](README.pt.md)
 
+[![T3 Code Labs: watch the launch film](media/poster.png)](media/t3-code-labs-film.mp4)
+
 T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles the app with warm clay colours, a cleaner sidebar and composer, and colour-coded usage and context meters, so you can see at a glance how much of your limits and context window a thread has used.
 
 ## What changes
@@ -20,6 +22,22 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 - Usage-limit meters in the thread details card are **green** while you have room, **amber** below 35% left and **red** below 15% left.
 - The context-window meter turns **amber** at 65% used and **red** at 85%, so you know when a thread is getting full.
 - The composer gets a soft accent glow while you type. Its context strip (checkout, branch, access) shows as chips.
+
+## Preview
+
+| Usage & context meters | Composer | Menus (web) |
+| --- | --- | --- |
+| ![Meters going green, amber, red](media/meters.gif) | ![Composer glow and chips](media/composer.gif) | ![Multi-select menu with icons](media/menu.gif) |
+
+| Before → after | Dark ↔ light |
+| --- | --- |
+| ![Wipe from stock T3 Code to T3 Code Labs](media/before-after.gif) | ![Dark and light modes](media/dark-light.gif) |
+
+**Before and after** (stock T3 Code on the left, T3 Code Labs on the right)
+
+![Before and after](media/before-after.png)
+
+[Watch the launch film](media/t3-code-labs-film.mp4) (48 s, with sound). Every frame of the UI is the real T3 Code web app running on a demo instance, composited from HTML; the music and sound effects are synthesized from scratch in about 200 lines of JavaScript. The [before/after wipe](media/before-after.mp4) is also available as a short clip. All media use demo data, and you can regenerate them with the scripts in [`media/src`](media/src/README.md).
 
 ## Install
 
