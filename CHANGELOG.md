@@ -1,0 +1,15 @@
+# Changelog
+
+## [0.1.0] - 2026-11-17
+
+First release: T3 Clawd's layout rebranded as T3 Code Labs, with colour-coded usage and context meters.
+
+### Added
+- **Labs branding**: "T3 Code" header with a Labs badge; the theme is named T3 Code Labs.
+- **Usage meters**: usage limits turn green, amber (below 35% left) or red (below 15% left).
+- **Context meter**: the context window turns amber at 65% used and red at 85%.
+- **Composer**: accent focus glow; the context strip (checkout, branch, access) shows as chips.
+- **Menus**: rounded context menus with an accent hover, and icons for the multi-select menu when it renders in HTML.
+
+### Changed
+- **Windows shortcut**: the New chat button shows Ctrl+N instead of ⌘N.

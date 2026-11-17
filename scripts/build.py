@@ -1,0 +1,125 @@
+"""Build t3-code-labs.json from src/base.json.
+
+src/base.json is T3 Clawd (MIT, rohit3a/t3-clawd) with the ⌘N label changed to Ctrl+N.
+This script layers the Labs changes on top and writes the theme file at the repo root.
+
+    python scripts/build.py            # writes ./t3-code-labs.json
+    t3 theme set ./t3-code-labs.json   # publishes it and switches T3 Code to it
+"""
+import json
+import sys
+from pathlib import Path
+from urllib.parse import quote
+
+ROOT = Path(__file__).resolve().parent.parent
+src = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "src" / "base.json"
+dst = Path(sys.argv[2]) if len(sys.argv) > 2 else ROOT / "t3-code-labs.json"
+t = json.load(open(src, encoding="utf-8"))
+c = t["css"]
+
+
+def rep(old, new):
+    global c
+    assert c.count(old) == 1, (old[:60], c.count(old))
+    c = c.replace(old, new, 1)
+
+
+# 1. Header: "T3 Code" + "Labs" badge
+rep('&::before{content:"T3";font-size:14.5px;font-weight:700;letter-spacing:-.02em}'
+    '&::after{content:"Clawd";font-size:14.5px;font-weight:500;letter-spacing:-.01em;color:var(--o)}',
+    '&::before{content:"T3 Code";font-size:14.5px;font-weight:650;letter-spacing:-.02em;white-space:nowrap}'
+    '&::after{content:"Labs";font-size:9.5px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;'
+    'line-height:1;padding:3px 6px 3px;border-radius:5px;color:var(--o);'
+    'background:color-mix(in srgb,var(--o) 13%,transparent);'
+    'border:1px solid color-mix(in srgb,var(--o) 32%,transparent)}')
+
+
+def icon(body):
+    svg = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' "
+           "stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>" + body + "</svg>")
+    return 'url("data:image/svg+xml,' + quote(svg, safe="=:/' ") + '")'
+
+
+IC = {
+    "check": icon("<circle cx='12' cy='12' r='10'/><path d='m9 12 2 2 4-4'/>"),
+    "clock": icon("<circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/>"),
+    "refresh": icon("<path d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'/><path d='M21 3v5h-5'/>"
+                    "<path d='M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16'/><path d='M8 16H3v5'/>"),
+    "mail": icon("<path d='M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z'/>"
+                 "<path d='m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10'/>"),
+    "trash": icon("<path d='M3 6h18'/><path d='M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6'/>"
+                  "<path d='M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2'/><path d='M10 11v6'/><path d='M14 11v6'/>"),
+    "pin": icon("<path d='M12 17v5'/><path d='M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z'/>"),
+    "dot": icon("<circle cx='12' cy='12' r='3'/>"),
+}
+
+# Multi-select menu = a top-level context menu where no item has a leading icon.
+# Item order from T3 source: [Unpin] Settle, [Snooze ▸], [Regenerate titles], Mark unread, Delete.
+M = '[data-context-menu][data-level="0"]:not(:has(button[role=menuitem]>svg:first-child))'
+B = 'button[role=menuitem]'
+
+extra = (
+    # premium context menus
+    "[data-context-menu]{border-radius:12px!important;border:1px solid var(--sbb);"
+    "box-shadow:0 14px 36px var(--sh),0 2px 6px rgba(0,0,0,.1)!important}"
+    "[data-context-menu]>div{padding:5px!important}"
+    "[data-context-menu] button[role=menuitem]{min-height:32px!important;border-radius:7px!important;"
+    "padding:5px 10px!important;gap:10px!important;font-size:13.5px!important;transition:background-color .12s}"
+    "[data-context-menu] button[role=menuitem]:not([aria-disabled=true]):is(:hover,:focus-visible){"
+    "background:color-mix(in srgb,var(--o) 13%,transparent)!important}"
+    "[data-context-menu] button[role=menuitem]>svg:first-child{width:15px;height:15px;flex:none;opacity:.8}"
+    "[data-context-menu] [role=separator]{margin:4px 6px!important;opacity:.7}"
+    # icons for the multi-select menu
+    f"{M} {B}::before{{content:\"\";flex:0 0 15px;width:15px;height:15px;opacity:.8;background:currentColor;"
+    f"-webkit-mask:var(--ic,{IC['dot']}) center/contain no-repeat}}"
+    f"{M} {B}:has(+{B}[aria-haspopup]),{M} {B}:first-of-type:not(:has(+{B}+{B}[aria-haspopup])){{--ic:{IC['check']}}}"
+    f"{M} {B}:has(+{B}+{B}[aria-haspopup]){{--ic:{IC['pin']}}}"
+    f"{M} {B}[aria-haspopup]{{--ic:{IC['clock']}}}"
+    f"{M} {B}[aria-haspopup]+{B}:not(:nth-last-of-type(-n+2)){{--ic:{IC['refresh']}}}"
+    f"{M} {B}:nth-last-of-type(2){{--ic:{IC['mail']}}}"
+    f"{M} {B}:last-of-type{{--ic:{IC['trash']}}}"
+    f"{M} {B}:last-of-type:not([aria-disabled=true]){{color:var(--err)!important;"
+    f"&:is(:hover,:focus-visible){{background:color-mix(in srgb,var(--err) 13%,transparent)!important}}}}"
+    # composer: accent focus glow + context strip as chips
+    "[data-slot=composer-host]:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--o) 13%,transparent),var(--csh)!important}"
+    ":is([data-slot=composer-context-strip] [data-composer-context-control],[data-slot=composer-context-strip] [data-slot=combobox-trigger]){height:26px!important;padding:0 10px!important;"
+    "gap:6px!important;border-radius:999px!important;font-size:12.5px!important;"
+    "background:rgba(127,127,127,.08)!important;border:1px solid var(--line)!important;"
+    "transition:border-color .15s,color .15s;& svg{width:13px!important;height:13px!important}"
+    "&:hover{color:var(--hi)!important;border-color:color-mix(in srgb,var(--o) 45%,transparent)!important}}"
+    "[data-chat-provider-model-picker]{border-radius:8px!important;&:hover{background:rgba(127,127,127,.12)!important}}"
+    # thread details card
+    "[data-thread-details-card]{border:1px solid var(--sbb)!important;box-shadow:var(--csh)!important}"
+)
+# Observability: traffic-light usage + context meters (rows expose "Name: N% left|used")
+U = 'section[aria-label="Usage limits"] [aria-label$="% left"]'
+X = 'section[aria-label="Context window"] [aria-label$="% used"]'
+def any_pct(base, nums, suffix):
+    return ",".join(f'{base}[aria-label*=": {n}% {suffix}"]' for n in nums)
+u_low, u_mid = range(0, 15), range(15, 35)
+x_high, x_mid = range(85, 101), range(65, 85)
+extra += (
+    f":is({U},{X}){{--meter:var(--ok);border-radius:7px!important;transition:background-color .12s;"
+    "&:hover{background:rgba(127,127,127,.08)!important}"
+    "&>span:nth-child(2){height:5px!important;background:rgba(127,127,127,.16)!important}"
+    "&>span:nth-child(2)>span{background:var(--meter)!important;"
+    "box-shadow:0 0 8px color-mix(in srgb,var(--meter) 45%,transparent)}"
+    "&>span:last-child{color:var(--meter)!important;font-weight:600!important}}"
+    f"{X}{{--meter:var(--o)}}"
+    f"{any_pct(U, u_mid, 'left')},{any_pct(X, x_mid, 'used')}{{--meter:var(--warn)}}"
+    f"{any_pct(U, u_low, 'left')},{any_pct(X, x_high, 'used')}{{--meter:var(--err)}}"
+    ':is(section[aria-label="Usage limits"],section[aria-label="Context window"])'
+    "{border-top:1px solid var(--line)!important}"
+)
+c = c + extra
+
+# error colour token for both appearances
+rep(":root{--sb:", ":root{--err:#E5644E;--warn:#E0A458;--ok:#6DBE8C;--sb:")
+rep(":root:not(.dark){--pk:", ":root:not(.dark){--err:#B5452F;--warn:#A86A1C;--ok:#2F8F5B;--pk:")
+
+t["name"] = "T3 Code Labs"
+t["css"] = c
+assert len(c) <= 50000, len(c)
+with open(dst, "w", encoding="utf-8") as f:
+    json.dump(t, f, ensure_ascii=False, indent=2)
+print("css chars", len(c))
