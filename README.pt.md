@@ -82,6 +82,10 @@ O `t3-code-labs.json` é gerado. Edita `scripts/build.py` (ou `src/base.json`) e
 python scripts/build.py
 ```
 
+## Apoiar
+
+Se o T3 Code Labs te torna o dia um pouco melhor, podes [pagar-me um café no Ko-fi](https://ko-fi.com/brunobola) ou no [Buy Me a Coffee](https://buymeacoffee.com/brunobola). Estrelas e issues também ajudam.
+
 ## Créditos
 
 Baseado no [T3 Clawd](https://github.com/rohit3a/t3-clawd) de [@rohit3a](https://github.com/rohit3a) (MIT), cujo trabalho de layout é a base deste tema.

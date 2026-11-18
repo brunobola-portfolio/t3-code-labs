@@ -82,6 +82,10 @@ For cost per model, tokens and cache savings, open T3 Code's built-in usage page
 python scripts/build.py
 ```
 
+## Support
+
+If T3 Code Labs makes your day a little nicer, you can [buy me a coffee on Ko-fi](https://ko-fi.com/brunobola) or [Buy Me a Coffee](https://buymeacoffee.com/brunobola). Stars and issues help too.
+
 ## Credits
 
 Built on [T3 Clawd](https://github.com/rohit3a/t3-clawd) by [@rohit3a](https://github.com/rohit3a) (MIT), whose layout work is the base of this theme.
