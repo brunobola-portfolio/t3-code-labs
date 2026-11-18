@@ -110,6 +110,8 @@ function shot(im, s, d, { radius = 22, alpha = 1, clip = null, shadow = true } =
   g.save(); g.globalAlpha = alpha * .9; rr(d.x + .5, d.y + .5, d.w - 1, d.h - 1, radius); g.strokeStyle = "rgba(255,255,255,.12)"; g.lineWidth = 1.5; g.stroke(); g.restore();
 }
 const FULL = { x: 0, y: 0, w: 1920, h: 1080 };
+// the Usage limits + Context window sections of the thread details card, in 1920x1080 capture pixels
+const MCROP = { x: 1528, y: 360, w: 378, h: 240 };
 const fit = (s, cx, cy, w) => ({ x: cx - w / 2, y: cy - (w * s.h / s.w) / 2, w, h: w * s.h / s.w });
 const mix = (a, b, t) => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), w: lerp(a.w, b.w, t), h: lerp(a.h, b.h, t) });
 function show(id, o, dy = 0, scale = 1) { const e = $(id); e.style.opacity = o; e.style.transform = `translateY(${(1 - o) * 24 + dy}px) scale(${scale})`; }
@@ -154,8 +156,8 @@ async function render(t) {
     const im = await img(seq("meters", i));
     const o = win(t, a, b, .5);
     const zoom = ease(span(t, a, a + 1.2));
-    const src = mix(FULL, { x: 1525, y: 296, w: 390, h: 198 }, zoom);
-    const dst = mix(fit(FULL, 1250, 560, 1100), { x: 790, y: 280, w: 1000, h: 1000 * 198 / 390 }, zoom);
+    const src = mix(FULL, MCROP, zoom);
+    const dst = mix(fit(FULL, 1250, 560, 1100), { x: 790, y: 540 - 500 * MCROP.h / MCROP.w, w: 1000, h: 1000 * MCROP.h / MCROP.w }, zoom);
     shot(im, src, dst, { alpha: o, radius: lerp(22, 28, zoom) });
     const e = TL.METER_EVENTS, lvl = t >= e[2].t ? 2 : t >= e[0].t ? 1 : 0;
     const chip = (k, name, col) => `<span class="chip" style="${lvl === k ? `border-color:${col};color:${col};background:${col}22` : "opacity:.5"}"><i style="background:${col}"></i>${name}</span>`;
@@ -179,9 +181,9 @@ async function render(t) {
     const k = clamp(Math.floor((t - TL.MENU_START) / TL.MENU_STEP), -1, 4);
     const aft = await (k < 0 ? img("stills/menu-after-dark.png") : img(seq("menu", k)));
     const o = win(t, a, b, .5);
-    const s = { x: 60, y: 500, w: 560, h: 320 };
+    const s = { x: 10, y: 430, w: 440, h: 350 };
     const pop = easeOut(span(t, a + .1, a + .9));
-    const W = 900 * lerp(.92, 1, pop);
+    const W = 780 * lerp(.92, 1, pop);
     shot(aft, s, { x: 1300 - W / 2, y: 540 - (W * s.h / s.w) / 2, w: W, h: W * s.h / s.w }, { alpha: o });
     section(t, S.menu, "Menus", "Icons where you<br>need them", "Rounded menus with an accent hover, and icons in the multi-select menu. Delete reads red.<br><span style='font-size:20px;opacity:.7'>Menus render in HTML in the web app; desktop menus are native.</span>");
     $("secTitle").style.top = "300px";
@@ -211,7 +213,7 @@ async function poster() {
   shot(dk, FULL, { x: 780, y: 330, w: 1060, h: 596 }, { radius: 20 });
   // magnified meters, floating over the screenshot
   const m = await img(seq("meters", 118));
-  shot(m, { x: 1525, y: 296, w: 390, h: 198 }, { x: 1300, y: 690, w: 560, h: 560 * 198 / 390 }, { radius: 18 });
+  shot(m, MCROP, { x: 1320, y: 640, w: 540, h: 540 * MCROP.h / MCROP.w }, { radius: 18 });
   $("secEyebrow").textContent = "A theme for T3 Code";
   $("secH").innerHTML = `<span style="font-size:118px;letter-spacing:-.04em">T3 Code</span><span class="badge" style="font-size:40px;top:-.9em">Labs</span>`;
   $("secP").innerHTML = "Warm dark &amp; light palettes, a cleaner sidebar and composer, and colour-coded usage and context meters.";
