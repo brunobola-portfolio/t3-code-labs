@@ -32,8 +32,10 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
 ## Selectors this theme relies on
 
 - Header: `a[aria-label="T3 Code home"]`.
-- Multi-select menu: `[data-context-menu][data-level="0"]` with no item that starts with an `svg`. Item order comes
-  from T3's source: [Unpin], Settle, [Snooze ▸], [Regenerate titles], Mark unread, Delete.
+- Multi-select menu: `[data-context-menu][data-level="0"]` with no item that starts with an `svg`. Items carry no id,
+  so icons hang off two semantic anchors: Snooze has `aria-haspopup`, Delete uses the destructive colour (inline
+  `style` or `text-destructive*` class). The rest is placed next to them, following T3's order: [Unpin], Settle,
+  [Snooze ▸], [Regenerate titles], Mark unread, Delete.
 - Usage meters: `section[aria-label="Usage limits"] [aria-label$="% left"]` (label like `Session: 97% left`).
 - Context meter: `section[aria-label="Context window"] [aria-label$="% used"]`.
 - Details card sections: `[data-thread-details-card] section[aria-label]`, whose first child holds a hidden `h3`

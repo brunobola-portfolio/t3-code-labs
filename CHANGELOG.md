@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- **Multi-select menu**: icons and the red Delete are anchored on what T3 marks (the submenu and the destructive item) instead of the item's position, so they stay right if T3 adds or reorders items.
+
 ### Added
 - **Thread details card**: each section shows its name (Workspace, Version Control, Usage limits, Context window); usage values read "67% left"; Add project script is a dashed button with an accent hover.
 - **Project folders**: 20 px icons (monograms and favicons aligned), the thread count as a pill (accent when the folder is open), the open folder's name in bold, and a pulsing "working" dot (static when the system asks for reduced motion).

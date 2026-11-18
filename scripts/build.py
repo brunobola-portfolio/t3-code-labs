@@ -57,6 +57,7 @@ IC = {
 # Item order from T3 source: [Unpin] Settle, [Snooze ▸], [Regenerate titles], Mark unread, Delete.
 M = '[data-context-menu][data-level="0"]:not(:has(button[role=menuitem]>svg:first-child))'
 B = 'button[role=menuitem]'
+DEL = B + ':is([style*="destructive"],[class*="text-destructive"])'
 
 extra = (
     # premium context menus
@@ -72,13 +73,15 @@ extra = (
     # icons for the multi-select menu
     f"{M} {B}::before{{content:\"\";flex:0 0 15px;width:15px;height:15px;opacity:.8;background:currentColor;"
     f"-webkit-mask:var(--ic,{IC['dot']}) center/contain no-repeat}}"
+    # Anchored on what T3 marks semantically, not on position: the submenu (Snooze) has aria-haspopup and
+    # Delete is painted with the destructive colour. The others are placed relative to those two anchors.
     f"{M} {B}:has(+{B}[aria-haspopup]),{M} {B}:first-of-type:not(:has(+{B}+{B}[aria-haspopup])){{--ic:{IC['check']}}}"
     f"{M} {B}:has(+{B}+{B}[aria-haspopup]){{--ic:{IC['pin']}}}"
     f"{M} {B}[aria-haspopup]{{--ic:{IC['clock']}}}"
-    f"{M} {B}[aria-haspopup]+{B}:not(:nth-last-of-type(-n+2)){{--ic:{IC['refresh']}}}"
-    f"{M} {B}:nth-last-of-type(2){{--ic:{IC['mail']}}}"
-    f"{M} {B}:last-of-type{{--ic:{IC['trash']}}}"
-    f"{M} {B}:last-of-type:not([aria-disabled=true]){{color:var(--err)!important;"
+    f"{M} {B}[aria-haspopup]+{B}:not(:has(+{DEL})){{--ic:{IC['refresh']}}}"
+    f"{M} {B}:has(+{DEL}){{--ic:{IC['mail']}}}"
+    f"{M} {DEL}{{--ic:{IC['trash']}}}"
+    f"{M} {DEL}:not([aria-disabled=true]){{color:var(--err)!important;"
     f"&:is(:hover,:focus-visible){{background:color-mix(in srgb,var(--err) 13%,transparent)!important}}}}"
     # composer: accent focus glow + context strip as chips
     "[data-slot=composer-host]:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--o) 13%,transparent),var(--csh)!important}"
