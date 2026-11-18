@@ -36,6 +36,11 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
   from T3's source: [Unpin], Settle, [Snooze ▸], [Regenerate titles], Mark unread, Delete.
 - Usage meters: `section[aria-label="Usage limits"] [aria-label$="% left"]` (label like `Session: 97% left`).
 - Context meter: `section[aria-label="Context window"] [aria-label$="% used"]`.
+- Details card sections: `[data-thread-details-card] section[aria-label]`, whose first child holds a hidden `h3`
+  title the theme shows; Add project script is `button[aria-label="Add project script"]`.
+- Sidebar project folders ("boring" sidebar): `li[data-testid=sidebar-project-folder]>button[data-sidebar-row]`, with
+  `[aria-expanded]`, the icon as first child, the count as `span.tabular-nums` and the working dot as the span holding
+  `.sr-only`.
 - Composer strip: `[data-slot=composer-context-strip]` with `[data-composer-context-control]` and the branch
   `[data-slot=combobox-trigger]`.
 

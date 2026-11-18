@@ -111,6 +111,39 @@ extra += (
     ':is(section[aria-label="Usage limits"],section[aria-label="Context window"])'
     "{border-top:1px solid var(--line)!important}"
 )
+# Thread details card: section eyebrows, "left" on usage values, a clear "add script" affordance.
+D = "[data-thread-details-card]"
+extra += (
+    f"{D} section[aria-label]>div:first-child:has(>h3){{display:flex!important;min-height:0!important;"
+    "margin:0 0 3px!important;padding:2px 10px 0!important}"
+    f"{D} section[aria-label]>div:first-child>h3{{font-size:10.5px!important;font-weight:600!important;"
+    "letter-spacing:.07em;text-transform:uppercase;color:var(--mu2)!important}"
+    f"{U}>span:last-child::after{{content:\" left\";font-weight:400;font-size:11px;color:var(--mu2)}}"
+    f"{D} button[aria-label=\"Add project script\"]{{border:1px dashed color-mix(in srgb,var(--mu) 38%,transparent)!important;"
+    "border-radius:8px!important;margin-top:4px!important;color:var(--mu)!important;"
+    "transition:border-color .15s,color .15s,background-color .15s;"
+    "& svg{color:var(--o)!important}"
+    "&:hover{border-color:color-mix(in srgb,var(--o) 60%,transparent)!important;color:var(--hi)!important;"
+    "background:color-mix(in srgb,var(--o) 8%,transparent)!important}}"
+    # tooltips: the first line (the meter's own label) stands out
+    "[data-slot=tooltip-viewport]>div>span:first-child:not(:only-child){font-weight:600}"
+)
+# Sidebar project folders: bigger icons, count as a pill, stronger open folder, live "working" dot.
+F = "li[data-testid=sidebar-project-folder]>button[data-sidebar-row]"
+extra += (
+    f"{F}{{height:34px!important;border-radius:9px!important;gap:10px!important;transition:background-color .12s}}"
+    f"{F}>:first-child{{width:20px!important;height:20px!important;flex:0 0 20px!important;"
+    "border-radius:6px!important;overflow:hidden;& :is(img,svg){{width:100%!important;height:100%!important}}}}"
+    f"{F}[aria-expanded=true]>span.truncate{{font-weight:600!important;color:var(--hi)!important}}"
+    f"{F}>span.tabular-nums{{display:inline-flex;align-items:center;justify-content:center;min-width:20px;"
+    "height:18px;padding:0 6px;border-radius:999px;font-size:11px!important;font-weight:500;"
+    "background:rgba(127,127,127,.13);color:var(--mu)!important}"
+    f"{F}[aria-expanded=true]>span.tabular-nums{{background:color-mix(in srgb,var(--o) 14%,transparent);"
+    "color:var(--pk,var(--o4))!important}"
+    f"{F}>span:has(>.sr-only){{animation:t3lp 1.6s ease-in-out infinite}}"
+    "@keyframes t3lp{50%{opacity:.3}}"
+    f"@media (prefers-reduced-motion:reduce){{{F}>span:has(>.sr-only){{animation:none}}}}"
+)
 c = c + extra
 
 # error colour token for both appearances
