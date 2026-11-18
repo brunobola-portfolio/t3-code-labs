@@ -253,6 +253,12 @@ async function main() {
   await page.waitForTimeout(1500);
   await page.locator('[role=dialog][aria-label=Usage] [data-slot=toggle][title^="Limits"]').first().click();
   await page.waitForTimeout(2500);
+  // Account labels can carry an organisation name ("Claude · <org>"). Fail closed unless every bar
+  // belongs to a bare provider name, so a demo instance signed in to a work account never gets captured.
+  const accounts = await page.evaluate(() => [...document.querySelectorAll('[role=dialog][aria-label=Usage] button[aria-label*="% left, "]')]
+    .map((b) => b.getAttribute("aria-label").split(":")[0].trim()));
+  const named = accounts.filter((a) => !/^(Claude|Codex|OpenAI|Gemini|Cursor)$/i.test(a));
+  if (!accounts.length || named.length) throw new Error(`Usage dialog shows account names (${named.join(", ") || "none found"}); use a demo instance with a single unnamed account`);
   await page.evaluate(() => [28, 11, 82].forEach((pct, i) => window.__labs.limit(i, pct)));
   await mouseAway(); await page.waitForTimeout(300);
   await shot("stills/usage-after-dark.png");

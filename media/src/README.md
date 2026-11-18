@@ -50,5 +50,6 @@ node gifs.mjs
 
 `capture.mjs` replaces the machine name on screen with `labs-demo` and throws instead of saving a frame if the
 hostname, the OS user name, or any comma-separated value in `T3_DEMO_FORBIDDEN` appears in the page text, title or
-labels. That is a safety net, not a review: look at the assets before committing them. Never run it against your
+labels. It also refuses to capture the Usage dialog if any account bar carries a name beyond the provider
+(for example an organisation). That is a safety net, not a review: look at the assets before committing them. Never run it against your
 everyday T3 Code.
