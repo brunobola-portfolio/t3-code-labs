@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-18
+
 ### Changed
 - **Multi-select menu**: icons and the red Delete are anchored on what T3 marks (the submenu and the destructive item) instead of the item's position, so they stay right if T3 adds or reorders items.
 
