@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: T3 Code itself
+    url: https://github.com/pingdotgg/t3code/issues
+    about: Bugs in T3 Code that also happen with the default theme belong there.

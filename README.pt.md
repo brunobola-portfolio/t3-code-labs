@@ -2,6 +2,8 @@
 
 Um tema premium para o [T3 Code](https://github.com/pingdotgg/t3code), pensado para dar mais visibilidade ao uso e ao contexto. Um só ficheiro, sem fork.
 
+[![Release](https://img.shields.io/github/v/release/brunobola-portfolio/t3-code-labs?color=D97757&label=release)](https://github.com/brunobola-portfolio/t3-code-labs/releases/latest) [![License: MIT](https://img.shields.io/badge/license-MIT-6DBE8C)](LICENSE) [![T3 Code theme](https://img.shields.io/badge/T3%20Code-theme-191919)](https://github.com/pingdotgg/t3code)
+
 [English](README.md)
 
 [![T3 Code Labs: ver o filme de apresentação](media/poster.png)](media/t3-code-labs-film.mp4)
@@ -21,6 +23,7 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 **Observabilidade**
 - As barras de limite de uso no cartão de detalhes ficam **verdes** com folga, **âmbar** abaixo de 35% restante e **vermelhas** abaixo de 15%.
 - A barra da janela de contexto passa a **âmbar** a partir de 65% usado e a **vermelho** a partir de 85%, para saberes quando a conversa está a ficar cheia.
+- A página **Usage → Limits** (Ctrl+U) mostra um cartão por limite: o número fica verde, âmbar ou vermelho, a barra de uma conta que está a acabar ganha um anel âmbar ou vermelho (cada conta mantém a sua cor) e a indicação de ritmo fica âmbar quando gastas mais depressa do que a janela avança e verde quando tens folga.
 - A caixa de texto ganha um brilho laranja suave enquanto escreves, e as indicações por baixo dela (pasta, branch, permissões) aparecem como etiquetas.
 
 ## Pré-visualização
@@ -37,6 +40,10 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 
 ![Antes e depois](media/before-after.png)
 
+**Usage → Limits** (Ctrl+U), antes e depois
+
+![Limites de uso antes e depois](media/usage-limits.png)
+
 [Ver o filme de apresentação](media/t3-code-labs-film.mp4) (48 s, com som). Toda a interface que aparece é a web app real do T3 Code a correr numa instância de demonstração, montada em HTML; a música e os efeitos sonoros são sintetizados de raiz em cerca de 200 linhas de JavaScript. A [transição antes/depois](media/before-after.mp4) também existe como clip curto. Todos os media usam dados fictícios e podem ser gerados de novo com os scripts em [`media/src`](media/src/README.md).
 
 ## Instalar
@@ -44,11 +51,11 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 **Com a linha de comandos do T3** (publica o tema e muda o T3 Code para ele):
 
 ```sh
-curl -LO https://raw.githubusercontent.com/brunobola-portfolio/t3-code-labs/main/t3-code-labs.json
+curl -LO https://github.com/brunobola-portfolio/t3-code-labs/releases/latest/download/t3-code-labs.json
 t3 theme set ./t3-code-labs.json
 ```
 
-**Ou à mão:** descarrega o [`t3-code-labs.json`](t3-code-labs.json). No T3 Code abre **Settings → Appearance → Add theme**, arrasta o ficheiro (ou cola-o em **Theme JSON**) e escolhe **T3 Code Labs**.
+**Ou à mão:** descarrega o [`t3-code-labs.json`](https://github.com/brunobola-portfolio/t3-code-labs/releases/latest/download/t3-code-labs.json) da [última versão](https://github.com/brunobola-portfolio/t3-code-labs/releases/latest). No T3 Code abre **Settings → Appearance → Add theme**, arrasta o ficheiro (ou cola-o em **Theme JSON**) e escolhe **T3 Code Labs**.
 
 Inclui modo escuro e claro.
 

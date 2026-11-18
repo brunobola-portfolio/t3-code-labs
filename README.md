@@ -2,6 +2,8 @@
 
 A premium, observability-first theme for [T3 Code](https://github.com/pingdotgg/t3code). One file, no fork.
 
+[![Release](https://img.shields.io/github/v/release/brunobola-portfolio/t3-code-labs?color=D97757&label=release)](https://github.com/brunobola-portfolio/t3-code-labs/releases/latest) [![License: MIT](https://img.shields.io/badge/license-MIT-6DBE8C)](LICENSE) [![T3 Code theme](https://img.shields.io/badge/T3%20Code-theme-191919)](https://github.com/pingdotgg/t3code)
+
 [Português](README.pt.md)
 
 [![T3 Code Labs: watch the launch film](media/poster.png)](media/t3-code-labs-film.mp4)
@@ -21,6 +23,7 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 **Observability**
 - Usage-limit meters in the thread details card are **green** while you have room, **amber** below 35% left and **red** below 15% left.
 - The context-window meter turns **amber** at 65% used and **red** at 85%, so you know when a thread is getting full.
+- The **Usage → Limits** page (Ctrl+U) gets one card per limit: the number turns green, amber or red, an account bar that runs low gets an amber or red ring (accounts keep their own colours), and the pace hint shows amber when you spend faster than the window and green when you have headroom.
 - The composer gets a soft accent glow while you type. Its context strip (checkout, branch, access) shows as chips.
 
 ## Preview
@@ -37,6 +40,10 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 
 ![Before and after](media/before-after.png)
 
+**Usage → Limits** (Ctrl+U), before and after
+
+![Usage limits before and after](media/usage-limits.png)
+
 [Watch the launch film](media/t3-code-labs-film.mp4) (48 s, with sound). Every frame of the UI is the real T3 Code web app running on a demo instance, composited from HTML; the music and sound effects are synthesized from scratch in about 200 lines of JavaScript. The [before/after wipe](media/before-after.mp4) is also available as a short clip. All media use demo data, and you can regenerate them with the scripts in [`media/src`](media/src/README.md).
 
 ## Install
@@ -44,11 +51,11 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 **With the T3 CLI** (publishes the theme and switches T3 Code to it):
 
 ```sh
-curl -LO https://raw.githubusercontent.com/brunobola-portfolio/t3-code-labs/main/t3-code-labs.json
+curl -LO https://github.com/brunobola-portfolio/t3-code-labs/releases/latest/download/t3-code-labs.json
 t3 theme set ./t3-code-labs.json
 ```
 
-**Or by hand:** download [`t3-code-labs.json`](t3-code-labs.json). In T3 Code, open **Settings → Appearance → Add theme**, drop the file in (or paste it into **Theme JSON**), then pick **T3 Code Labs**.
+**Or by hand:** download [`t3-code-labs.json`](https://github.com/brunobola-portfolio/t3-code-labs/releases/latest/download/t3-code-labs.json) from the [latest release](https://github.com/brunobola-portfolio/t3-code-labs/releases/latest). In T3 Code, open **Settings → Appearance → Add theme**, drop the file in (or paste it into **Theme JSON**), then pick **T3 Code Labs**.
 
 Dark and light modes are both included.
 

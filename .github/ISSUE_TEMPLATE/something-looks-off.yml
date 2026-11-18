@@ -1,0 +1,50 @@
+name: Something looks off
+description: A part of T3 Code looks wrong or unstyled with T3 Code Labs, often after a T3 Code update.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Before attaching a screenshot, check it shows no private data (project or client names, paths, emails, costs).
+  - type: textarea
+    id: what
+    attributes:
+      label: What looks off
+      description: Which part of the app, and what you expected instead.
+    validations:
+      required: true
+  - type: input
+    id: t3-version
+    attributes:
+      label: T3 Code version
+      description: Settings → About, for example 0.1.10-nightly.20261116.
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      options:
+        - Desktop app
+        - Web app (browser)
+        - Both
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Appearance
+      options:
+        - Dark
+        - Light
+        - Both
+  - type: input
+    id: theme-version
+    attributes:
+      label: T3 Code Labs version
+      description: The release you installed, for example v0.3.0.
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Optional. Demo data only, please.
