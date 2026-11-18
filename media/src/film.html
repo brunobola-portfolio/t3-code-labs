@@ -222,12 +222,14 @@ async function poster() {
   const st = $("secTitle"); st.style.top = "300px"; st.style.left = "110px"; st.style.opacity = 1; st.style.transform = "none";
   $("secP").style.width = "620px";
 }
-async function beforeAfter(scheme = "dark") {
+// Side-by-side still: `name` picks the capture pair (thread | usage), `crop` the part of the screen to show.
+async function beforeAfter(scheme = "dark", name = "thread", crop = FULL) {
   ALL.forEach((id) => ($(id).style.opacity = 0));
   bg(2);
-  const [bef, aft] = await Promise.all([img(`stills/thread-before-${scheme}.png`), img(`stills/thread-after-${scheme}.png`)]);
-  shot(bef, FULL, { x: 60, y: 200, w: 880, h: 495 }, { radius: 16 });
-  shot(aft, FULL, { x: 980, y: 200, w: 880, h: 495 }, { radius: 16 });
+  const [bef, aft] = await Promise.all([img(`stills/${name}-before-${scheme}.png`), img(`stills/${name}-after-${scheme}.png`)]);
+  const h = 880 * crop.h / crop.w;
+  shot(bef, crop, { x: 60, y: 200, w: 880, h }, { radius: 16 });
+  shot(aft, crop, { x: 980, y: 200, w: 880, h }, { radius: 16 });
   for (const [id, x] of [["lblBefore", 60], ["lblAfter", 980]]) { const e = $(id); e.style.opacity = 1; e.style.transform = "none"; e.style.left = x + "px"; e.style.right = "auto"; e.style.top = "126px"; }
 }
 window.render = render;

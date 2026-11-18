@@ -23,8 +23,12 @@ await page.evaluate(() => window.poster());
 await page.screenshot({ path: join(MEDIA, "poster.png") });
 await page.evaluate(() => window.beforeAfter("dark"));
 await page.screenshot({ path: join(MEDIA, "before-after.png"), clip: { x: 0, y: 100, width: 1920, height: 640 } });
+// the Usage -> Limits dialog, cropped to its limit cards
+const USAGE = { x: 290, y: 130, w: 1340, h: 480 };
+await page.evaluate((c) => window.beforeAfter("dark", "usage", c), USAGE);
+await page.screenshot({ path: join(MEDIA, "usage-limits.png"), clip: { x: 0, y: 100, width: 1920, height: Math.ceil(100 + 880 * USAGE.h / USAGE.w + 60) } });
 await close();
-for (const f of ["poster.png", "before-after.png"]) console.log(f, size(join(MEDIA, f)));
+for (const f of ["poster.png", "before-after.png", "usage-limits.png"]) console.log(f, size(join(MEDIA, f)));
 
 // before/after wipe as a short silent MP4 (plays inline on GitHub when opened)
 const [ba0, ba1] = SCENES.beforeAfter;

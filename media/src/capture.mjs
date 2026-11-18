@@ -103,6 +103,20 @@ const pageInit = (args) => {
         if (val && kind === "used") val.textContent = `${Math.round(pct * 2)}k / 200k`;
       }
     },
+    // Sets the i-th limit card of the Usage dialog (single account) to `pct` % left.
+    limit(i, pct) {
+      const rows = [...document.querySelectorAll('[role=dialog][aria-label=Usage] section>div')]
+        .filter((r) => r.querySelector('button[aria-label*="% left, "]'));
+      const row = rows[i];
+      if (!row) return;
+      const big = row.querySelector(":scope>div:first-child>span:nth-child(2)>span:first-child");
+      if (big) big.textContent = `${pct}%`;
+      const bar = row.querySelector('button[aria-label*="% left, "]');
+      bar.setAttribute("aria-label", bar.getAttribute("aria-label").replace(/: \d+% left/, `: ${pct}% left`));
+      const [fill, rest] = bar.querySelectorAll("div[aria-hidden]>div>div");
+      if (fill) fill.style.width = `${pct}%`;
+      if (rest) rest.style.width = `${100 - pct}%`;
+    },
   };
 };
 
@@ -232,6 +246,18 @@ async function main() {
   await items.nth(count - 1).hover();
   await shot("stills/menu-after-light.png");
   await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+
+  // ---- Usage -> Limits dialog (dark), with demo values covering green, amber and red
+  await scheme("dark");
+  await page.locator('[aria-label="Usage"]').first().click();
+  await page.waitForTimeout(1500);
+  await page.locator('[role=dialog][aria-label=Usage] [data-slot=toggle][title^="Limits"]').first().click();
+  await page.waitForTimeout(2500);
+  await page.evaluate(() => [28, 11, 82].forEach((pct, i) => window.__labs.limit(i, pct)));
+  await mouseAway(); await page.waitForTimeout(300);
+  await shot("stills/usage-after-dark.png");
+  await themed(false); await shot("stills/usage-before-dark.png"); await themed(true);
+  await page.keyboard.press("Escape");
 
   console.log(`captured ${shotN} frames into ${OUT}`);
   await browser.close();
