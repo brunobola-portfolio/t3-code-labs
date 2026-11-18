@@ -147,6 +147,46 @@ extra += (
     "@keyframes t3lp{50%{opacity:.3}}"
     f"@media (prefers-reduced-motion:reduce){{{F}>span:has(>.sr-only){{animation:none}}}}"
 )
+# Usage → Limits dialog: one card per limit, a bar per account. Each bar is a button whose label reads
+# "<account>: N% left, resets in …"; the fill keeps the account's colour, so the status rides on a ring instead.
+L = '[role=dialog][aria-label=Usage]'
+PB = 'button[aria-label*="% left, "]'
+ROW = f'{L} section>div:has({PB})'
+def pool(nums, base=PB):
+    return ",".join(f'{base}[aria-label*=": {n}% left"]' for n in nums)
+extra += (
+    f"{L} section>h2{{font-size:14px!important;font-weight:600!important;letter-spacing:-.01em}}"
+    f"{ROW}{{--lvl:var(--ok);border-radius:12px!important;border-color:var(--line)!important;"
+    "background:rgba(127,127,127,.035);transition:border-color .15s,background-color .15s;"
+    "&:hover{border-color:color-mix(in srgb,var(--o) 30%,var(--line))!important;background:rgba(127,127,127,.06)}"
+    # title as a quiet eyebrow, the number as the hero
+    "&>div:first-child>span:first-child{font-size:12px!important;font-weight:600!important;color:var(--mu)!important;"
+    "letter-spacing:.02em}"
+    "&>div:first-child>span:nth-child(2)>span:first-child{letter-spacing:-.03em;font-feature-settings:'tnum'}}"
+    # a single-account limit: the big number takes the traffic-light colour
+    f"{ROW}:not(:has({PB}~{PB}))>div:first-child>span:nth-child(2)>span:first-child{{color:var(--lvl)!important}}"
+    f"{ROW}:has({pool(u_mid)}){{--lvl:var(--warn)}}"
+    f"{ROW}:has({pool(u_low)}){{--lvl:var(--err)}}"
+    # pace hint: ahead of pace is a warning, headroom is good news
+    f'{L} [role=img][aria-label^="Ahead of pace"]{{color:var(--warn)!important}}'
+    f'{L} [role=img][aria-label^="Under pace"]{{color:var(--ok)!important}}'
+    # the bars: richer fill, calmer hatching, crisper pace marker, readable labels
+    f"{L} {PB}{{--lvl:transparent;border-radius:8px!important;"
+    "box-shadow:inset 0 0 0 1.5px var(--lvl),0 1px 0 rgba(255,255,255,.03);transition:box-shadow .15s,filter .15s;"
+    "&:hover{filter:brightness(1.08)}"
+    "&>div[aria-hidden]{border-radius:8px!important}"
+    "&>div[aria-hidden]>div>div:first-child{opacity:.6!important;border-radius:8px!important;"
+    "background-image:linear-gradient(rgba(255,255,255,.14),rgba(255,255,255,0) 60%)}"
+    "&>div[aria-hidden]>div>div:nth-child(2){opacity:.11!important}"
+    "&>span[aria-hidden]:first-of-type{width:2px!important;box-shadow:0 0 0 1px rgba(0,0,0,.35)}"
+    "&>div:last-child{font-size:12px!important;font-weight:600;text-shadow:0 1px 2px var(--sh)}"
+    "&>div:last-child>span:last-child{border-radius:6px!important;border:1px solid var(--line)}}"
+    f"{L} :is({pool(u_mid)}){{--lvl:color-mix(in srgb,var(--warn) 85%,transparent)}}"
+    f"{L} :is({pool(u_low)}){{--lvl:var(--err)}}"
+    # Cost / Tokens / Limits switch: the active view in the accent
+    f"{L} [data-slot=toggle-group] [data-slot=toggle][aria-pressed=true]{{"
+    "background:color-mix(in srgb,var(--o) 16%,transparent)!important;color:var(--hi)!important}"
+)
 c = c + extra
 
 # error colour token for both appearances

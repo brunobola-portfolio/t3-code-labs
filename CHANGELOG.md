@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- **Usage → Limits**: each limit is a card with a quiet title and a traffic-light number (single-account limits); account bars keep their colour but get a fuller fill, calmer hatching, a crisper pace marker and an amber or red ring when that account runs low; "ahead of pace" shows amber and "under pace" green; the active Cost / Tokens / Limits view uses the accent.
+
 ## [0.2.0] - 2026-11-18
 
 ### Changed

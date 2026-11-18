@@ -43,6 +43,10 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
 - Sidebar project folders ("boring" sidebar): `li[data-testid=sidebar-project-folder]>button[data-sidebar-row]`, with
   `[aria-expanded]`, the icon as first child, the count as `span.tabular-nums` and the working dot as the span holding
   `.sr-only`.
+- Usage → Limits dialog: `[role=dialog][aria-label=Usage]`. Each limit is a `section>div` card; each account bar is a
+  `button` labelled `<account>: N% left, resets in …` whose first hidden child holds the fill (keeps the account's
+  colour) and the hatched rest of the window. Pace icons are `[role=img]` labelled `Ahead of pace…`, `Under pace…`,
+  `On pace…`. The big number is coloured only when the card has a single account bar.
 - Composer strip: `[data-slot=composer-context-strip]` with `[data-composer-context-control]` and the branch
   `[data-slot=combobox-trigger]`.
 
