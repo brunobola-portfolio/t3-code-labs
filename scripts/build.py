@@ -209,7 +209,8 @@ KEY = ("font-size:11px;font-weight:500;letter-spacing:0;line-height:1;white-spac
 rep('&::after{content:"New chat"}&::before{content:"Ctrl+N";position:absolute;right:12px;top:50%;'
     'transform:translateY(-50%);font-size:11.5px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,.8);'
     'background:rgba(0,0,0,.14);padding:2px 6px;border-radius:5px}',
-    '&::after{content:"New chat";order:1}'
+    # T3's New thread opens the project picker (chat.new); the ellipsis says so. Shift+click skips the picker.
+    '&::after{content:"New chat\\2026";order:1}'
     f'&::before{{content:"Ctrl N";order:2;margin-left:auto;{KEY}}}'
     '&>span[aria-hidden]{display:inline-flex!important;order:3;position:static!important;width:auto!important;'
     'height:auto!important;translate:none!important;transform:none!important;'
@@ -252,6 +253,19 @@ extra += (
     f"div:has(>{MP})::after{{content:\"\\2191\\2193  move   \\B7   \\21B5  choose   \\B7   Esc  close   \\B7   Ctrl \\21E7 M  toggle\";"
     "display:block;white-space:pre;padding:7px 14px 8px;font-size:11px;color:var(--mu2);"
     "border-top:1px solid var(--line)}"
+)
+
+# Command palette (Ctrl K, and the project picker New chat opens): accent row, and in the project picker a tip
+# that Shift+click on New chat skips it. The picker is the palette with a Back button.
+P = "[data-command-palette]"
+extra += (
+    f"{P} [data-slot=command-item]{{border-radius:8px!important;transition:background-color .1s}}"
+    f"{P} [data-slot=command-item][data-highlighted]{{background:color-mix(in srgb,var(--o) 12%,transparent)!important;"
+    "box-shadow:inset 2px 0 0 var(--o)}"
+    f"{P} [data-slot=command-shortcut]{{font-variant-numeric:tabular-nums}}"
+    f"{P}:has([aria-label=Back]) [data-slot=command-footer]::after{{"
+    "content:\"\\21E7  click New chat to skip this\";font-size:11px;color:var(--mu2);white-space:nowrap}"
+    f"@media (max-width:700px){{{P} [data-slot=command-footer]::after{{display:none}}}}"
 )
 
 # Small things: selection in the accent.

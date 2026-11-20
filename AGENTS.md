@@ -56,6 +56,9 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
   `[data-chat-composer-surface]` has focus.
 - Model picker: `[data-model-picker-content]` (providers `[data-model-picker-provider]`, models
   `[data-slot=combobox-item]`), effort `[data-model-picker-effort] [role=radio]`; the hint footer is `::after` on its parent.
+- Command palette: `[data-command-palette]`, rows `[data-slot=command-item]` (`[data-highlighted]`), footer
+  `[data-slot=command-footer]`. The project picker that New thread opens (`chat.new`) is the palette with a
+  `[aria-label=Back]` button; Ctrl K's palette has none. A theme cannot change what the click does.
 - Key hints quote T3's default bindings (`~/.t3/userdata/keybindings.json`): check them there before changing a hint.
 
 If an update breaks one of these, find the new attribute in the web app's DOM before reaching for class names.

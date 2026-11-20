@@ -15,7 +15,8 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 **Aspeto**
 - Paletas escura e clara, quentes, com laranja de destaque.
 - Cabeçalho "T3 Code" com o selo **Labs**.
-- Cabeçalho da barra lateral compacto: pesquisa, Projects e Add project numa só linha e, por baixo, **New chat** com os atalhos ao lado: **Ctrl N** e **⇧ project** (Shift+clique ou Ctrl+Shift+N) para uma conversa nova no projeto atual.
+- Cabeçalho da barra lateral compacto: pesquisa, Projects e Add project numa só linha e, por baixo, **New chat…** com os atalhos ao lado. Um clique ou **Ctrl N** abre o seletor de projetos do T3 (Enter escolhe o atual); **⇧ project** (Shift+clique ou Ctrl+Shift+N) cria logo a conversa no projeto atual.
+- Paleta de comandos e seletor de projetos com linhas arredondadas, a linha ativa na cor de destaque e, no seletor, uma dica para o saltar.
 - O projeto no breadcrumb mostra um **+** ao passar o rato: um clique abre uma conversa nova nesse projeto.
 - Conversas em duas linhas, título "Recents" e secções Working / Settled mais arrumadas.
 - Seletor de modelos numa só coluna, com os níveis de esforço numa barra segmentada, o fornecedor ativo e o modelo sob o rato em laranja, e um rodapé com as teclas (↑↓ mover, ↵ escolher, Esc fechar, Ctrl+Shift+M abrir/fechar).

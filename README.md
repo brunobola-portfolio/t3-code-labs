@@ -15,7 +15,8 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 **Look and feel**
 - Warm dark and light palettes with a clay accent.
 - "T3 Code" header with a **Labs** badge.
-- A compact sidebar header: search, Projects and Add project on one row, then **New chat** with its shortcuts beside the label: **Ctrl N**, and **⇧ project** (Shift+click or Ctrl+Shift+N) for a new thread in the current project.
+- A compact sidebar header: search, Projects and Add project on one row, then **New chat…** with its shortcuts beside the label. A click or **Ctrl N** opens T3's project picker (Enter picks the current one); **⇧ project** (Shift+click or Ctrl+Shift+N) starts a thread in the current project straight away.
+- Command palette and project picker with rounded rows, the highlighted row in the accent, and a tip in the picker on how to skip it.
 - The project in the breadcrumb shows a **+** on hover: one click starts a new thread there.
 - Two-line thread rows, a "Recents" heading, and tidier Working / Settled shelves.
 - A single-column model picker with effort levels as a segmented bar, the active provider and the hovered model in the accent, and a key-hint footer (↑↓ move, ↵ choose, Esc close, Ctrl+Shift+M toggle).

@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Changed
+- **New chat…** now ends in an ellipsis: like T3's own New thread button, a click opens the project picker
+  (Enter picks the current project). Shift+click or Ctrl+Shift+N skips the picker.
+
+### Added
+- **Command palette and project picker**: rounded rows, the highlighted row in the accent, and in the project picker a
+  tip that Shift+click on New chat skips it.
+
 ## [0.4.0] - 2026-11-20
 
 ### Changed
