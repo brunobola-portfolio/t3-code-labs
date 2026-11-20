@@ -15,16 +15,17 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 **Look and feel**
 - Warm dark and light palettes with a clay accent.
 - "T3 Code" header with a **Labs** badge.
-- Sidebar menu: search, Projects, Add project, and a big **New chat** button showing its shortcut (Ctrl+N).
+- A compact sidebar header: search, Projects and Add project on one row, then **New chat** with its shortcuts beside the label: **Ctrl N**, and **⇧ project** (Shift+click or Ctrl+Shift+N) for a new thread in the current project.
+- The project in the breadcrumb shows a **+** on hover: one click starts a new thread there.
 - Two-line thread rows, a "Recents" heading, and tidier Working / Settled shelves.
-- A single-column model picker with effort levels as a segmented bar.
+- A single-column model picker with effort levels as a segmented bar, the active provider and the hovered model in the accent, and a key-hint footer (↑↓ move, ↵ choose, Esc close, Ctrl+Shift+M toggle).
 - Rounded, softer context menus with an accent hover. Icons are added to the multi-select menu (Settle, Snooze, Regenerate titles, Mark unread, Delete) when T3 Code renders it in HTML.
 
 **Observability**
 - Usage-limit meters in the thread details card are **green** while you have room, **amber** below 35% left and **red** below 15% left.
 - The context-window meter turns **amber** at 65% used and **red** at 85%, so you know when a thread is getting full.
 - The **Usage → Limits** page (Ctrl+U) gets one card per limit: the number turns green, amber or red, an account bar that runs low gets an amber or red ring (accounts keep their own colours), and the pace hint shows amber when you spend faster than the window and green when you have headroom.
-- The composer gets a soft accent glow while you type. Its context strip (checkout, branch, access) shows as chips.
+- The composer gets a soft accent glow and key hints while you type (↵ send, ⇧↵ new line, Ctrl+Shift+M model). Its context strip shows as chips: the branch in monospace, and the permission mode in green, or amber when the agent has **Full access**.
 
 ## Preview
 
@@ -43,6 +44,10 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 **Usage → Limits** (Ctrl+U), before and after
 
 ![Usage limits before and after](media/usage-limits.png)
+
+**Composer and model picker**, before and after
+
+![Model picker and composer before and after](media/composer-picker.png)
 
 [Watch the launch film](media/t3-code-labs-film.mp4) (48 s, with sound). Every frame of the UI is the real T3 Code web app running on a demo instance, composited from HTML; the music and sound effects are synthesized from scratch in about 200 lines of JavaScript. The [before/after wipe](media/before-after.mp4) is also available as a short clip. All media use demo data, and you can regenerate them with the scripts in [`media/src`](media/src/README.md).
 
@@ -71,7 +76,8 @@ For cost per model, tokens and cache savings, open T3 Code's built-in usage page
 ## Requirements and notes
 
 - Needs a T3 Code build whose themes accept `css`. It was tested on Nightly `0.1.10-nightly.20261116`; older nightlies import the colours only.
-- On the desktop app, right-click menus are native OS menus, which themes cannot style. The menu icons show up when T3 Code runs in the browser.
+- On the desktop app, right-click menus are native OS menus, which themes cannot style. The menu icons show up when T3 Code runs in the browser. Everything else (sidebar, composer, model picker, meters, Usage page) looks the same on desktop and web.
+- The key hints show T3 Code's default shortcuts (Windows and Linux labels). If you remapped them, the hints do not know.
 - T3 Code styles can change between releases. The theme uses T3's stable selectors where it can; if something looks off after an update, [open an issue](https://github.com/brunobola-portfolio/t3-code-labs/issues).
 
 ## Build from source
