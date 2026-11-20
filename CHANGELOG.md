@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-20
+
+### Changed
+- **Sidebar header**: search, Projects and Add project share one row (icon buttons with T3's tooltips), and **New chat** sits under them with its shortcuts beside the label: Ctrl N, and ⇧ project for a new thread in the current project (Shift+click or Ctrl+Shift+N). About 75 px shorter than before.
+
+### Added
+- **Composer key hints**: while the composer has focus, its footer shows ↵ send, ⇧↵ new line and Ctrl+Shift+M model (T3's default bindings); hidden on narrow windows.
+- **Permission chip**: the access mode below the composer is green, or amber for Full access; the branch chip uses monospace.
+- **Model picker**: the active provider and the hovered model use the accent, the chosen model gets an accent edge, the selected effort is bold, and a footer lists the keys (↑↓, ↵, Esc, Ctrl+Shift+M).
+- **Breadcrumb**: the project crumb shows a "+" on hover, since clicking it starts a new thread in that project.
+- **Text selection** in the accent colour.
+- **Media**: a before/after image of the composer and model picker (`media/composer-picker.png`); the film, poster and GIFs were recaptured with the new sidebar and composer.
+
 ## [0.3.0] - 2026-11-18
 
 ### Added
