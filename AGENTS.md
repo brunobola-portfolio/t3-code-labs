@@ -49,7 +49,11 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
   `On pace…`. The big number is coloured only when the card has a single account bar.
 - Sidebar header: the row holding `[aria-label="New thread"]` (search box, then `div.shrink-0` with the project filter,
   Add project and New thread). New thread's `::before`/`::after` and its inner touch-target `span[aria-hidden]` carry the
-  label and the two shortcut chips. The breadcrumb crumb is `button[aria-label^="New thread in "]`.
+  label and the two shortcut chips. The breadcrumb crumb is `nav[aria-label="Thread breadcrumb"]
+  button[aria-label^="New thread in "]`; project folders carry their own `button[aria-label^="New thread in "]` (the
+  one-click New pill), so always scope that selector.
+- New thread screen: the project switcher is `[data-draft-project-trigger]`; "or start without a project" is
+  `div:has(>div>h1 [data-draft-project-trigger])>p>button`.
 - Composer strip: `[data-slot=composer-context-strip]` with `[data-composer-context-control]`, the branch
   `[data-slot=combobox-trigger]` (`aria-label="Branch: …"`) and `button[aria-label^="Permissions:"]`.
 - Composer footer: `[data-chat-composer-footer]>div:first-child` (attach button) carries the key hints, shown while

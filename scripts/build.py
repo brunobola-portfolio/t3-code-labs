@@ -218,9 +218,33 @@ rep('&::after{content:"New chat"}&::before{content:"Ctrl+N";position:absolute;ri
 
 # Breadcrumb: the project crumb starts a new thread in that project; say so with a "+" on hover.
 extra += (
-    'button[aria-label^="New thread in "]{border-radius:6px;transition:background-color .12s;'
+    'nav[aria-label="Thread breadcrumb"] button[aria-label^="New thread in "]{border-radius:6px;transition:background-color .12s;'
     '&::after{content:"+";display:none;margin-left:2px;font-weight:600;color:var(--o)}'
     '&:hover{background:rgba(127,127,127,.1);&::after{display:inline}}}'
+)
+
+# Project folders: the hover action is T3's one-click "New thread in <project>" (no picker). Make it a labelled
+# accent pill so it reads as the quick way in.
+extra += (
+    'li[data-testid=sidebar-project-folder] button[aria-label^="New thread in "]{'
+    "width:auto!important;height:22px!important;padding:0 7px 0 5px!important;gap:3px!important;"
+    "border-radius:6px!important;border-color:transparent!important;font-size:11.5px!important;font-weight:600!important;"
+    "color:var(--o)!important;background:color-mix(in srgb,var(--o) 13%,transparent)!important;"
+    "& svg{width:13px!important;height:13px!important}"
+    '&::after{content:"New";position:static!important;min-width:0!important;min-height:0!important}'
+    "&:hover{background:color-mix(in srgb,var(--o) 24%,transparent)!important}}"
+)
+
+# New thread screen: the project name is a switcher (show the chevron), and "or start without a project" gets
+# its shortcut (T3's tooltip: Ctrl+Alt+N).
+DH = "div:has(>div>h1 [data-draft-project-trigger])"
+extra += (
+    '[data-draft-project-trigger]::after{content:"";width:.28em;height:.28em;margin-left:.28em;flex:none;'
+    "align-self:center;border:solid currentColor;border-width:0 .07em .07em 0;rotate:45deg;translate:0 -.1em;"
+    "opacity:.55;transition:opacity .15s}"
+    "[data-draft-project-trigger]:hover::after,[data-draft-project-trigger][data-popup-open]::after{opacity:1}"
+    f'{DH}>p>button::after{{content:"Ctrl Alt N";margin-left:8px;font-size:10.5px;font-weight:500;'
+    "padding:2px 5px;border-radius:5px;border:1px solid var(--line);color:var(--mu2)}"
 )
 
 # Composer: keyboard hints while you type (T3's default bindings), and the permission mode at a glance.
@@ -263,6 +287,9 @@ extra += (
     f"{P} [data-slot=command-item][data-highlighted]{{background:color-mix(in srgb,var(--o) 12%,transparent)!important;"
     "box-shadow:inset 2px 0 0 var(--o)}"
     f"{P} [data-slot=command-shortcut]{{font-variant-numeric:tabular-nums}}"
+    # every other list popup (project switcher, branch picker, menus) gets the same accent row
+    ":is([data-slot=combobox-popup] [data-slot=combobox-item],[data-slot=menu-popup] [data-slot=menu-item])[data-highlighted]{"
+    "background:color-mix(in srgb,var(--o) 12%,transparent)!important}"
     f"{P}:has([aria-label=Back]) [data-slot=command-footer]::after{{"
     "content:\"\\21E7  click New chat to skip this\";font-size:11px;color:var(--mu2);white-space:nowrap}"
     f"@media (max-width:700px){{{P} [data-slot=command-footer]::after{{display:none}}}}"

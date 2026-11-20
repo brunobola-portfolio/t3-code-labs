@@ -7,8 +7,15 @@
   (Enter picks the current project). Shift+click or Ctrl+Shift+N skips the picker.
 
 ### Added
+- **Project folders**: the hover action, T3's one-click "New thread in <project>", becomes an accent **New** pill.
+- **New thread screen**: a chevron on the project name (it opens the project switcher) and a **Ctrl Alt N** chip on
+  "or start without a project".
 - **Command palette and project picker**: rounded rows, the highlighted row in the accent, and in the project picker a
-  tip that Shift+click on New chat skips it.
+  tip that Shift+click on New chat skips it. The project switcher, branch picker and menus use the same accent row.
+- New README image: the new thread screen, before and after. Film, poster and GIFs recaptured.
+
+### Fixed
+- The breadcrumb's hover **+** no longer leaks onto other "New thread in …" buttons.
 
 ## [0.4.0] - 2026-11-20
 

@@ -16,7 +16,9 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 - Paletas escura e clara, quentes, com laranja de destaque.
 - Cabeçalho "T3 Code" com o selo **Labs**.
 - Cabeçalho da barra lateral compacto: pesquisa, Projects e Add project numa só linha e, por baixo, **New chat…** com os atalhos ao lado. Um clique ou **Ctrl N** abre o seletor de projetos do T3 (Enter escolhe o atual); **⇧ project** (Shift+clique ou Ctrl+Shift+N) cria logo a conversa no projeto atual.
-- Paleta de comandos e seletor de projetos com linhas arredondadas, a linha ativa na cor de destaque e, no seletor, uma dica para o saltar.
+- Quando a barra lateral agrupa as conversas por projeto, cada pasta mostra um botão **New** ao passar o rato: um clique abre logo uma conversa nesse projeto, sem seletor.
+- No ecrã de conversa nova, o nome do projeto ganha uma seta (serve para trocar de projeto) e "or start without a project" mostra o atalho, **Ctrl Alt N**.
+- Paleta de comandos, seletor de projetos, troca de projeto e menus com o mesmo aspeto: linhas arredondadas e a linha ativa na cor de destaque. O seletor de projetos diz também como o saltar.
 - O projeto no breadcrumb mostra um **+** ao passar o rato: um clique abre uma conversa nova nesse projeto.
 - Conversas em duas linhas, título "Recents" e secções Working / Settled mais arrumadas.
 - Seletor de modelos numa só coluna, com os níveis de esforço numa barra segmentada, o fornecedor ativo e o modelo sob o rato em laranja, e um rodapé com as teclas (↑↓ mover, ↵ escolher, Esc fechar, Ctrl+Shift+M abrir/fechar).
@@ -49,6 +51,10 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 **Caixa de texto e seletor de modelos**, antes e depois
 
 ![Seletor de modelos e caixa de texto antes e depois](media/composer-picker.png)
+
+**Ecrã de conversa nova**, antes e depois (pastas de projeto com o botão **New**, troca de projeto, Ctrl Alt N)
+
+![Ecrã de conversa nova antes e depois](media/new-thread.png)
 
 [Ver o filme de apresentação](media/t3-code-labs-film.mp4) (48 s, com som). Toda a interface que aparece é a web app real do T3 Code a correr numa instância de demonstração, montada em HTML; a música e os efeitos sonoros são sintetizados de raiz em cerca de 200 linhas de JavaScript. A [transição antes/depois](media/before-after.mp4) também existe como clip curto. Todos os media usam dados fictícios e podem ser gerados de novo com os scripts em [`media/src`](media/src/README.md).
 

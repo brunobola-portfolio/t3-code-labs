@@ -16,7 +16,9 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 - Warm dark and light palettes with a clay accent.
 - "T3 Code" header with a **Labs** badge.
 - A compact sidebar header: search, Projects and Add project on one row, then **New chat…** with its shortcuts beside the label. A click or **Ctrl N** opens T3's project picker (Enter picks the current one); **⇧ project** (Shift+click or Ctrl+Shift+N) starts a thread in the current project straight away.
-- Command palette and project picker with rounded rows, the highlighted row in the accent, and a tip in the picker on how to skip it.
+- When the sidebar groups threads by project, each project folder shows a **New** pill on hover: one click starts a thread in that project, no picker.
+- On the new thread screen the project name gets a chevron (it is a switcher), and "or start without a project" shows its shortcut, **Ctrl Alt N**.
+- Command palette, project picker, project switcher and menus share one look: rounded rows and the highlighted row in the accent. The project picker also tells you how to skip it.
 - The project in the breadcrumb shows a **+** on hover: one click starts a new thread there.
 - Two-line thread rows, a "Recents" heading, and tidier Working / Settled shelves.
 - A single-column model picker with effort levels as a segmented bar, the active provider and the hovered model in the accent, and a key-hint footer (↑↓ move, ↵ choose, Esc close, Ctrl+Shift+M toggle).
@@ -49,6 +51,10 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 **Composer and model picker**, before and after
 
 ![Model picker and composer before and after](media/composer-picker.png)
+
+**New thread screen**, before and after (project folders with the **New** pill, the project switcher, Ctrl Alt N)
+
+![New thread screen before and after](media/new-thread.png)
 
 [Watch the launch film](media/t3-code-labs-film.mp4) (48 s, with sound). Every frame of the UI is the real T3 Code web app running on a demo instance, composited from HTML; the music and sound effects are synthesized from scratch in about 200 lines of JavaScript. The [before/after wipe](media/before-after.mp4) is also available as a short clip. All media use demo data, and you can regenerate them with the scripts in [`media/src`](media/src/README.md).
 
