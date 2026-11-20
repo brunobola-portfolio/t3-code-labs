@@ -1,5 +1,6 @@
 // Builds the README media from the film and the compositor:
-//   media/poster.png, media/before-after.png, media/before-after.mp4 and the preview GIFs.
+//   media/poster.png, media/before-after.png, media/usage-limits.png, media/composer-picker.png,
+//   media/before-after.mp4 and the preview GIFs.
 // Run after `node film.mjs` (the GIFs are cut from the film so they share its captions).
 import { spawnSync } from "node:child_process";
 import { statSync } from "node:fs";
@@ -27,8 +28,12 @@ await page.screenshot({ path: join(MEDIA, "before-after.png"), clip: { x: 0, y: 
 const USAGE = { x: 290, y: 130, w: 1340, h: 480 };
 await page.evaluate((c) => window.beforeAfter("dark", "usage", c), USAGE);
 await page.screenshot({ path: join(MEDIA, "usage-limits.png"), clip: { x: 0, y: 100, width: 1920, height: Math.ceil(100 + 880 * USAGE.h / USAGE.w + 60) } });
+// the model picker over the composer, with the key hints
+const PICKER = { x: 500, y: 270, w: 1120, h: 800 };
+await page.evaluate((c) => window.beforeAfter("dark", "picker", c), PICKER);
+await page.screenshot({ path: join(MEDIA, "composer-picker.png"), clip: { x: 0, y: 100, width: 1920, height: Math.ceil(100 + 880 * PICKER.h / PICKER.w + 60) } });
 await close();
-for (const f of ["poster.png", "before-after.png", "usage-limits.png"]) console.log(f, size(join(MEDIA, f)));
+for (const f of ["poster.png", "before-after.png", "usage-limits.png", "composer-picker.png"]) console.log(f, size(join(MEDIA, f)));
 
 // before/after wipe as a short silent MP4 (plays inline on GitHub when opened)
 const [ba0, ba1] = SCENES.beforeAfter;

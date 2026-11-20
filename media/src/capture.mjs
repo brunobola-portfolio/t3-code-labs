@@ -265,6 +265,20 @@ async function main() {
   await themed(false); await shot("stills/usage-before-dark.png"); await themed(true);
   await page.keyboard.press("Escape");
 
+  // ---- model picker over the focused composer (dark): key hints in the footer and in the popup
+  await page.goto(URL + "/");
+  await page.waitForTimeout(2000);
+  await page.getByText("Add rate limiting to the public API").first().click();
+  await page.waitForTimeout(2500);
+  await page.locator("[data-testid=composer-editor]").click();
+  await page.locator("[data-chat-provider-model-picker]").click();
+  await page.waitForTimeout(800);
+  await page.locator("[data-model-picker-content] [data-slot=combobox-item]").nth(1).hover();
+  await page.waitForTimeout(300);
+  await shot("stills/picker-after-dark.png");
+  await themed(false); await shot("stills/picker-before-dark.png"); await themed(true);
+  await page.keyboard.press("Escape");
+
   console.log(`captured ${shotN} frames into ${OUT}`);
   await browser.close();
 }

@@ -174,7 +174,7 @@ async function render(t) {
     const src = mix(FULL, { x: 470, y: 455, w: 1060, h: 218 }, zoom);
     const dst = mix(fit(FULL, 960, 640, 1300), { x: 220, y: 450, w: 1480, h: 1480 * 218 / 1060 }, zoom);
     shot(im, src, dst, { alpha: o });
-    section(t, S.composer, "Composer", "A composer that feels alive", "A soft accent glow while you type. Checkout, branch and access sit below as chips.");
+    section(t, S.composer, "Composer", "A composer that feels alive", "Key hints while you type. Checkout, branch and access sit below as chips, full access in amber.");
     $("secTitle").style.top = "96px";
   } else if (t < S.menu[1]) {
     const [a, b] = S.menu;
