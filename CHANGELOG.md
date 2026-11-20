@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-20
+
 ### Changed
 - **Composer key hints** follow the composer's state: in a thread, Ctrl Alt ↵ send + new thread; on a new thread, Ctrl ↵ send in background; while the agent works, ↵ steer, Ctrl ↵ queue, and Alt ↑ edit queued once a message waits.
 
