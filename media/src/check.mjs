@@ -29,7 +29,7 @@ function pairUrl() {
     encoding: "utf8", shell: process.platform === "win32", env: { ...process.env, T3CODE_HOME: HOME },
   });
   const m = out.match(/Pairing URL:\s*(\S+)/);
-  if (!m) throw new Error("could not pair:\n" + out);
+  if (!m) throw new Error("could not pair:\n" + out.replace(/https?:\/\/\S+/g, "<redacted>"));
   return m[1];
 }
 
