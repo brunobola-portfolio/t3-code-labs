@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+- The launch film has a new scene, "One click into any project": the **New** pill, then the project picker (54 s).
+- `npm run check` in `media/src`: confirms on a demo instance that every selector the theme relies on still matches.
+
 ## [0.5.0] - 2026-11-20
 
 ### Changed

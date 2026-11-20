@@ -56,7 +56,7 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 
 ![Ecrã de conversa nova antes e depois](media/new-thread.png)
 
-[Ver o filme de apresentação](media/t3-code-labs-film.mp4) (48 s, com som). Toda a interface que aparece é a web app real do T3 Code a correr numa instância de demonstração, montada em HTML; a música e os efeitos sonoros são sintetizados de raiz em cerca de 200 linhas de JavaScript. A [transição antes/depois](media/before-after.mp4) também existe como clip curto. Todos os media usam dados fictícios e podem ser gerados de novo com os scripts em [`media/src`](media/src/README.md).
+[Ver o filme de apresentação](media/t3-code-labs-film.mp4) (54 s, com som). Toda a interface que aparece é a web app real do T3 Code a correr numa instância de demonstração, montada em HTML; a música e os efeitos sonoros são sintetizados de raiz em cerca de 200 linhas de JavaScript. A [transição antes/depois](media/before-after.mp4) também existe como clip curto. Todos os media usam dados fictícios e podem ser gerados de novo com os scripts em [`media/src`](media/src/README.md).
 
 ## Instalar
 

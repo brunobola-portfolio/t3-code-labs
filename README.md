@@ -56,7 +56,7 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 
 ![New thread screen before and after](media/new-thread.png)
 
-[Watch the launch film](media/t3-code-labs-film.mp4) (48 s, with sound). Every frame of the UI is the real T3 Code web app running on a demo instance, composited from HTML; the music and sound effects are synthesized from scratch in about 200 lines of JavaScript. The [before/after wipe](media/before-after.mp4) is also available as a short clip. All media use demo data, and you can regenerate them with the scripts in [`media/src`](media/src/README.md).
+[Watch the launch film](media/t3-code-labs-film.mp4) (54 s, with sound). Every frame of the UI is the real T3 Code web app running on a demo instance, composited from HTML; the music and sound effects are synthesized from scratch in about 200 lines of JavaScript. The [before/after wipe](media/before-after.mp4) is also available as a short clip. All media use demo data, and you can regenerate them with the scripts in [`media/src`](media/src/README.md).
 
 ## Install
 

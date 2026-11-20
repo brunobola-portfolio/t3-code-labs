@@ -292,6 +292,13 @@ async function main() {
   await page.waitForTimeout(400);
   await shot("stills/newthread-after-dark.png");
   await themed(false); await shot("stills/newthread-before-dark.png"); await themed(true);
+  // the project picker New chat opens, with the tip on how to skip it
+  await page.locator('[aria-label="New thread"]').first().click();
+  await page.waitForTimeout(900);
+  await mouseAway();
+  await shot("stills/projpicker-after-dark.png");
+  await themed(false); await shot("stills/projpicker-before-dark.png"); await themed(true);
+  await page.keyboard.press("Escape");
 
   console.log(`captured ${shotN} frames into ${OUT}`);
   await browser.close();

@@ -187,6 +187,22 @@ async function render(t) {
     shot(aft, s, { x: 1300 - W / 2, y: 540 - (W * s.h / s.w) / 2, w: W, h: W * s.h / s.w }, { alpha: o });
     section(t, S.menu, "Menus", "Icons where you<br>need them", "Rounded menus with an accent hover, and icons in the multi-select menu. Delete reads red.<br><span style='font-size:20px;opacity:.7'>Menus render in HTML in the web app; desktop menus are native.</span>");
     $("secTitle").style.top = "300px";
+  } else if (t < S.quick[1]) {
+    // new threads: the New pill on a hovered project, then the project picker that New chat opens
+    const [a, b] = S.quick, [s0, s1] = TL.QUICK_SWAP;
+    const [nt, pp] = await Promise.all([img("stills/newthread-after-dark.png"), img("stills/projpicker-after-dark.png")]);
+    const o = win(t, a, b, .5);
+    const zoom = ease(span(t, a, a + 1.4));
+    const A = { x: 0, y: 150, w: 1340, h: 640 };          // sidebar folders + new thread screen
+    const PILL = { x: 0, y: 186, w: 400, h: 191 };        // the hovered folder and its New pill
+    const PICK = { x: 560, y: 60, w: 800, h: 382 };       // the project picker
+    const dst = (s) => fit(s, 1330, 560, 1020);
+    const sw = ease(span(t, s0, s1));
+    const srcA = mix(A, PILL, ease(span(t, a + .4, TL.QUICK_PILL)));
+    shot(nt, srcA, mix(dst(A), dst(PILL), ease(span(t, a + .4, TL.QUICK_PILL))), { alpha: o * (1 - sw) * lerp(.85, 1, zoom) });
+    if (sw > 0) shot(pp, PICK, dst(PICK), { alpha: o * sw });
+    section(t, S.quick, "New threads", "One click into<br>any project", "Hover a project and click <b style='color:#D97757'>New</b>. No picker in the way.");
+    $("secTitle").style.top = "330px";
   } else if (t < S.modes[1]) {
     const [a, b] = S.modes, [m0, m1] = TL.MODE_SWITCH;
     const [dk, lt] = await Promise.all([img("stills/thread-after-dark.png"), img("stills/thread-after-light.png")]);
