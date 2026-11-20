@@ -65,6 +65,7 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
   `[aria-label=Back]` button; Ctrl K's palette has none. A theme cannot change what the click does.
 - Key hints quote T3's default bindings (`~/.t3/userdata/keybindings.json`): check them there before changing a hint.
 
+After a T3 Code update, run `npm run check` in `media/src` against the demo: it lists any selector above that no longer matches.
 If an update breaks one of these, find the new attribute in the web app's DOM before reaching for class names.
 
 ## Media (README images, GIFs and the launch film)

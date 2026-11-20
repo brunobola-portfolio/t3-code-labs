@@ -7,6 +7,7 @@
     "capture": "node capture.mjs",
     "film": "node film.mjs",
     "audio": "node audio.mjs",
+    "check": "node check.mjs",
     "all": "node capture.mjs && node audio.mjs && node film.mjs && node gifs.mjs"
   },
   "devDependencies": {
