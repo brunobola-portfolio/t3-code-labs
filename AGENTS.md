@@ -47,8 +47,16 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
   `button` labelled `<account>: N% left, resets in …` whose first hidden child holds the fill (keeps the account's
   colour) and the hatched rest of the window. Pace icons are `[role=img]` labelled `Ahead of pace…`, `Under pace…`,
   `On pace…`. The big number is coloured only when the card has a single account bar.
-- Composer strip: `[data-slot=composer-context-strip]` with `[data-composer-context-control]` and the branch
-  `[data-slot=combobox-trigger]`.
+- Sidebar header: the row holding `[aria-label="New thread"]` (search box, then `div.shrink-0` with the project filter,
+  Add project and New thread). New thread's `::before`/`::after` and its inner touch-target `span[aria-hidden]` carry the
+  label and the two shortcut chips. The breadcrumb crumb is `button[aria-label^="New thread in "]`.
+- Composer strip: `[data-slot=composer-context-strip]` with `[data-composer-context-control]`, the branch
+  `[data-slot=combobox-trigger]` (`aria-label="Branch: …"`) and `button[aria-label^="Permissions:"]`.
+- Composer footer: `[data-chat-composer-footer]>div:first-child` (attach button) carries the key hints, shown while
+  `[data-chat-composer-surface]` has focus.
+- Model picker: `[data-model-picker-content]` (providers `[data-model-picker-provider]`, models
+  `[data-slot=combobox-item]`), effort `[data-model-picker-effort] [role=radio]`; the hint footer is `::after` on its parent.
+- Key hints quote T3's default bindings (`~/.t3/userdata/keybindings.json`): check them there before changing a hint.
 
 If an update breaks one of these, find the new attribute in the web app's DOM before reaching for class names.
 

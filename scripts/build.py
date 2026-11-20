@@ -187,6 +187,75 @@ extra += (
     f"{L} [data-slot=toggle-group] [data-slot=toggle][aria-pressed=true]{{"
     "background:color-mix(in srgb,var(--o) 16%,transparent)!important;color:var(--hi)!important}"
 )
+# Sidebar header, compact: search and the two icon actions share one row; New chat sits under them with its
+# shortcuts beside the label (Ctrl+N, and Shift for "new thread in the current project", as T3's tooltip says).
+H = 'div:has(>div.shrink-0>[aria-label="New thread"])'
+rep(H + '{flex-direction:column!important;align-items:stretch!important;gap:4px!important;',
+    H + '{display:grid!important;grid-template-columns:minmax(0,1fr) 34px 34px;align-items:center!important;'
+    'gap:6px!important;')
+rep('&>div.shrink-0>[aria-label="Add project"]::after{content:"Add project"}'
+    '&>div.shrink-0>:not([aria-label="New thread"],[aria-label="Add project"]){order:-1;&::after{content:"Projects"}}',
+    '&>div.shrink-0>:not([aria-label="New thread"]){justify-content:center!important;padding:0!important;'
+    'height:36px!important;min-height:36px!important;max-height:36px!important;border-radius:10px!important;'
+    'background:var(--sb)!important;border:1px solid var(--sbb)!important;color:var(--mu)!important;'
+    '&:hover{color:var(--hi)!important;border-color:rgba(127,127,127,.3)!important}}'
+    '&>div.shrink-0>:not([aria-label="New thread"],[aria-label="Add project"]){order:-1}')
+rep('&>div.shrink-0>[aria-label="New thread"]{order:5;margin-top:8px!important;',
+    '&>div.shrink-0>[aria-label="New thread"]{order:5;grid-column:1/-1;margin-top:4px!important;')
+rep('justify-content:center!important;gap:8px!important;background:var(--o)!important;',
+    'justify-content:flex-start!important;padding:0 7px 0 12px!important;gap:8px!important;background:var(--o)!important;')
+KEY = ("font-size:11px;font-weight:500;letter-spacing:0;line-height:1;white-space:nowrap;"
+       "color:rgba(255,255,255,.85);background:rgba(0,0,0,.15);padding:4px 6px;border-radius:5px")
+rep('&::after{content:"New chat"}&::before{content:"Ctrl+N";position:absolute;right:12px;top:50%;'
+    'transform:translateY(-50%);font-size:11.5px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,.8);'
+    'background:rgba(0,0,0,.14);padding:2px 6px;border-radius:5px}',
+    '&::after{content:"New chat";order:1}'
+    f'&::before{{content:"Ctrl N";order:2;margin-left:auto;{KEY}}}'
+    '&>span[aria-hidden]{display:inline-flex!important;order:3;position:static!important;width:auto!important;'
+    'height:auto!important;translate:none!important;transform:none!important;'
+    f'&::after{{content:"\\21E7  project";{KEY};background:rgba(0,0,0,.08);color:rgba(255,255,255,.72)}}}}')
+
+# Breadcrumb: the project crumb starts a new thread in that project; say so with a "+" on hover.
+extra += (
+    'button[aria-label^="New thread in "]{border-radius:6px;transition:background-color .12s;'
+    '&::after{content:"+";display:none;margin-left:2px;font-weight:600;color:var(--o)}'
+    '&:hover{background:rgba(127,127,127,.1);&::after{display:inline}}}'
+)
+
+# Composer: keyboard hints while you type (T3's default bindings), and the permission mode at a glance.
+CF = "[data-chat-composer-footer]>div:first-child"
+extra += (
+    f"{CF}{{display:flex;align-items:center;gap:10px;min-width:0}}"
+    f"{CF}::after{{content:\"\\21B5  send   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl \\21E7 M  model\";"
+    "white-space:pre;overflow:hidden;text-overflow:ellipsis;font-size:11.5px;color:var(--mu2);"
+    "opacity:0;transition:opacity .2s}"
+    f"[data-chat-composer-surface]:focus-within {CF}::after{{opacity:1}}"
+    f"@media (max-width:1000px){{{CF}::after{{display:none}}}}"
+    '[data-slot=composer-context-strip] button[aria-label^="Permissions:"]{--pm:var(--ok);'
+    "color:color-mix(in srgb,var(--pm) 80%,var(--hi))!important;"
+    "border-color:color-mix(in srgb,var(--pm) 40%,transparent)!important;"
+    "background:color-mix(in srgb,var(--pm) 9%,transparent)!important}"
+    '[data-slot=composer-context-strip] button[aria-label="Permissions: Full access"]{--pm:var(--warn)}'
+    '[data-slot=composer-context-strip] button[aria-label^="Branch:"] [title]{font-family:var(--font-mono,ui-monospace),monospace;font-size:12px}'
+)
+
+# Model picker popup: accent for the active provider, the hovered and the chosen model, and key hints.
+MP = "[data-model-picker-content]"
+extra += (
+    f"{MP} [data-model-picker-provider] button[aria-pressed=true]{{"
+    "background:color-mix(in srgb,var(--o) 16%,transparent)!important;color:var(--hi)!important;border-radius:8px!important}"
+    f"{MP} [data-slot=combobox-item]{{border-radius:8px!important;transition:background-color .1s}}"
+    f"{MP} [data-slot=combobox-item][data-highlighted]{{background:color-mix(in srgb,var(--o) 12%,transparent)!important}}"
+    f"{MP} [data-slot=combobox-item][aria-selected=true]{{color:var(--hi)!important;font-weight:600;"
+    "box-shadow:inset 2px 0 0 var(--o)}"
+    "[data-model-picker-effort] [role=radio][aria-checked=true]{color:var(--o)!important;font-weight:600}"
+    f"div:has(>{MP})::after{{content:\"\\2191\\2193  move   \\B7   \\21B5  choose   \\B7   Esc  close   \\B7   Ctrl \\21E7 M  toggle\";"
+    "display:block;white-space:pre;padding:7px 14px 8px;font-size:11px;color:var(--mu2);"
+    "border-top:1px solid var(--line)}"
+)
+
+# Small things: selection in the accent.
+extra += "::selection{background:color-mix(in srgb,var(--o) 30%,transparent)}"
 c = c + extra
 assert c.count("{") == c.count("}"), "unbalanced braces"
 
