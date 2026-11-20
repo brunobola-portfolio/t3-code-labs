@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-20
+
 ### Changed
 - **New chat…** now ends in an ellipsis: like T3's own New thread button, a click opens the project picker
   (Enter picks the current project). Shift+click or Ctrl+Shift+N skips the picker.
