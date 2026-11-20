@@ -136,7 +136,7 @@ F = "li[data-testid=sidebar-project-folder]>button[data-sidebar-row]"
 extra += (
     f"{F}{{height:34px!important;border-radius:9px!important;gap:10px!important;transition:background-color .12s}}"
     f"{F}>:first-child{{width:20px!important;height:20px!important;flex:0 0 20px!important;"
-    "border-radius:6px!important;overflow:hidden;& :is(img,svg){{width:100%!important;height:100%!important}}}}"
+    "border-radius:6px!important;overflow:hidden;& :is(img,svg){width:100%!important;height:100%!important}}"
     f"{F}[aria-expanded=true]>span.truncate{{font-weight:600!important;color:var(--hi)!important}}"
     f"{F}>span.tabular-nums{{display:inline-flex;align-items:center;justify-content:center;min-width:20px;"
     "height:18px;padding:0 6px;border-radius:999px;font-size:11px!important;font-weight:500;"
@@ -188,6 +188,7 @@ extra += (
     "background:color-mix(in srgb,var(--o) 16%,transparent)!important;color:var(--hi)!important}"
 )
 c = c + extra
+assert c.count("{") == c.count("}"), "unbalanced braces"
 
 # error colour token for both appearances
 rep(":root{--sb:", ":root{--err:#E5644E;--warn:#E0A458;--ok:#6DBE8C;--sb:")
