@@ -279,6 +279,20 @@ async function main() {
   await themed(false); await shot("stills/picker-before-dark.png"); await themed(true);
   await page.keyboard.press("Escape");
 
+  // ---- new thread screen with project folders (dark): the one-click "New" pill on a hovered folder, the project
+  // switcher chevron and the Ctrl Alt N chip
+  await page.evaluate(() => {
+    const k = "t3code:client-settings:v1";
+    const s = JSON.parse(localStorage.getItem(k) || "{}");
+    localStorage.setItem(k, JSON.stringify({ ...s, boringSidebarEnabled: true, sidebarProjectGroupingMode: "repository" }));
+  });
+  await page.goto(URL + "/");
+  await page.waitForTimeout(2500);
+  await page.locator("li[data-testid=sidebar-project-folder]").first().hover();
+  await page.waitForTimeout(400);
+  await shot("stills/newthread-after-dark.png");
+  await themed(false); await shot("stills/newthread-before-dark.png"); await themed(true);
+
   console.log(`captured ${shotN} frames into ${OUT}`);
   await browser.close();
 }

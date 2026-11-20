@@ -10,7 +10,7 @@ launch film. The UI in every frame is the real T3 Code web app, running on a **d
 | `audio.mjs` | Synthesizes the soundtrack (pad, arpeggio, bass, soft drums, UI sound effects) into `out/soundtrack.wav`. |
 | `film.html` | The compositor: draws the captured frames, titles and transitions for any time `t`, plus the poster and before/after layouts. |
 | `film.mjs` | Renders `film.html` frame by frame and encodes `../t3-code-labs-film.mp4` (1080p30, H.264 + AAC). `--stills 2,9,17` previews single moments. |
-| `gifs.mjs` | Writes `../poster.png`, `../before-after.png`, `../usage-limits.png`, `../composer-picker.png`, `../before-after.mp4` and the GIFs (cut from the film). |
+| `gifs.mjs` | Writes `../poster.png`, `../before-after.png`, `../usage-limits.png`, `../composer-picker.png`, `../new-thread.png`, `../before-after.mp4` and the GIFs (cut from the film). |
 
 ## Requirements
 
