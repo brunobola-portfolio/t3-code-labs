@@ -28,7 +28,7 @@ T3 Code Labs keeps the T3 Code name and adds a small **Labs** badge. It restyles
 - Usage-limit meters in the thread details card are **green** while you have room, **amber** below 35% left and **red** below 15% left.
 - The context-window meter turns **amber** at 65% used and **red** at 85%, so you know when a thread is getting full.
 - The **Usage → Limits** page (Ctrl+U) gets one card per limit: the number turns green, amber or red, an account bar that runs low gets an amber or red ring (accounts keep their own colours), and the pace hint shows amber when you spend faster than the window and green when you have headroom.
-- The composer gets a soft accent glow and key hints while you type (↵ send, ⇧↵ new line, Ctrl+Shift+M model). Its context strip shows as chips: the branch in monospace, and the permission mode in green, or amber when the agent has **Full access**.
+- The composer gets a soft accent glow and key hints while you type that follow what you are doing: ↵ send and Ctrl+Alt+↵ send and start a new thread in a thread, Ctrl+↵ send in the background on a new thread, and while the agent works ↵ steer, Ctrl+↵ queue and Alt+↑ edit the queued message. Its context strip shows as chips: the branch in monospace, and the permission mode in green, or amber when the agent has **Full access**.
 
 ## Preview
 

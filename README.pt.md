@@ -28,7 +28,7 @@ O T3 Code Labs mantém o nome T3 Code e acrescenta um pequeno selo **Labs**. Dá
 - As barras de limite de uso no cartão de detalhes ficam **verdes** com folga, **âmbar** abaixo de 35% restante e **vermelhas** abaixo de 15%.
 - A barra da janela de contexto passa a **âmbar** a partir de 65% usado e a **vermelho** a partir de 85%, para saberes quando a conversa está a ficar cheia.
 - A página **Usage → Limits** (Ctrl+U) mostra um cartão por limite: o número fica verde, âmbar ou vermelho, a barra de uma conta que está a acabar ganha um anel âmbar ou vermelho (cada conta mantém a sua cor) e a indicação de ritmo fica âmbar quando gastas mais depressa do que a janela avança e verde quando tens folga.
-- A caixa de texto ganha um brilho laranja suave e dicas de teclado enquanto escreves (↵ enviar, ⇧↵ nova linha, Ctrl+Shift+M modelo). As indicações por baixo dela aparecem como etiquetas: o branch em letra monoespaçada e as permissões a verde, ou a âmbar quando o agente tem **Full access**.
+- A caixa de texto ganha um brilho laranja suave e dicas de teclado enquanto escreves que acompanham o que estás a fazer: numa conversa, ↵ enviar e Ctrl+Alt+↵ enviar e abrir logo uma conversa nova; numa conversa nova, Ctrl+↵ enviar em segundo plano; e com o agente a trabalhar, ↵ redirecionar, Ctrl+↵ pôr em fila e Alt+↑ editar a mensagem em fila. As indicações por baixo dela aparecem como etiquetas: o branch em letra monoespaçada e as permissões a verde, ou a âmbar quando o agente tem **Full access**.
 
 ## Pré-visualização
 

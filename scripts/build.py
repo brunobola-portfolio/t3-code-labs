@@ -251,9 +251,14 @@ extra += (
 CF = "[data-chat-composer-footer]>div:first-child"
 extra += (
     f"{CF}{{display:flex;align-items:center;gap:10px;min-width:0}}"
-    f"{CF}::after{{content:\"\\21B5  send   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl \\21E7 M  model\";"
+    # The hints follow the composer's state (T3's default bindings and follow-up mode, steer):
+    # an open thread, a new thread (draft), a running agent (Stop generation shows), and a queued message.
+    f"{CF}::after{{content:\"\\21B5  send   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl Alt \\21B5  send + new thread   \\B7   Ctrl \\21E7 M  model\";"
     "white-space:pre;overflow:hidden;text-overflow:ellipsis;font-size:11.5px;color:var(--mu2);"
     "opacity:0;transition:opacity .2s}"
+    f"body:has([data-draft-project-trigger]) {CF}::after{{content:\"\\21B5  send   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl \\21B5  send in background   \\B7   Ctrl \\21E7 M  model\"}}"
+    f"[data-chat-composer-footer]:has(button:is([aria-label=\"Stop generation\"],[aria-label=Stopping]))>div:first-child::after{{content:\"\\21B5  steer   \\B7   Ctrl \\21B5  queue   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl \\21E7 M  model\"}}"
+    f"body:has([aria-label^=\"Queued message\"]) [data-chat-composer-footer]:has(button:is([aria-label=\"Stop generation\"],[aria-label=Stopping]))>div:first-child::after{{content:\"\\21B5  steer   \\B7   Ctrl \\21B5  queue   \\B7   Alt \\2191  edit queued   \\B7   \\21E7\\21B5  new line\"}}"
     f"[data-chat-composer-surface]:focus-within {CF}::after{{opacity:1}}"
     f"@media (max-width:1000px){{{CF}::after{{display:none}}}}"
     '[data-slot=composer-context-strip] button[aria-label^="Permissions:"]{--pm:var(--ok);'

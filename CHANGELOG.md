@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- **Composer key hints** follow the composer's state: in a thread, Ctrl Alt ↵ send + new thread; on a new thread, Ctrl ↵ send in background; while the agent works, ↵ steer, Ctrl ↵ queue, and Alt ↑ edit queued once a message waits.
+
 ### Added
 - The launch film has a new scene, "One click into any project": the **New** pill, then the project picker (54 s).
 - `npm run check` in `media/src`: confirms on a demo instance that every selector the theme relies on still matches.
