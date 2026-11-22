@@ -1,7 +1,7 @@
 // Shared timeline for the launch film: the picture (film.html) and the music (audio.mjs) both read it,
 // so sound effects land on the frame they belong to.
 export const FPS = 30;
-export const DURATION = 54; // seconds
+export const DURATION = 60; // seconds
 
 export const SCENES = {
   intro: [0, 5],
@@ -10,8 +10,9 @@ export const SCENES = {
   composer: [23, 30],
   menu: [30, 35],
   quick: [35, 41],
-  modes: [41, 47],
-  outro: [47, 54],
+  filter: [41, 47],
+  modes: [47, 53],
+  outro: [53, 60],
 };
 
 // Meter clip: 150 captured frames played between these times.
@@ -30,9 +31,11 @@ export const METER_EVENTS = [
 ].sort((a, b) => a.t - b.t);
 
 export const WIPE = [8.2, 10.4];      // before -> after wipe
-export const MODE_SWITCH = [43.0, 44.4]; // dark -> light circular reveal
+export const MODE_SWITCH = [49.0, 50.4]; // dark -> light circular reveal
 export const QUICK_PILL = 36.6;       // the New pill lights up on the hovered project
 export const QUICK_SWAP = [38.0, 38.6]; // cross-fade to the project picker
+export const FILTER_OPEN = 43.6;      // press on Clear: the picker opens over the chip
+export const FILTER_DONE = 44.5;      // and the filter is gone
 export const COMPOSER_PLAY = [24.0, 29.4];
 export const MENU_STEP = 0.75;        // seconds per hovered item
 export const MENU_START = 30.9;
@@ -50,7 +53,10 @@ export const SFX = [
   { t: QUICK_PILL, kind: "click" },
   { t: QUICK_SWAP[0] + 0.2, kind: "pop" },
   { t: 41.0, kind: "whoosh" },
-  { t: MODE_SWITCH[0], kind: "sweep" },
+  { t: FILTER_OPEN, kind: "click" },
+  { t: FILTER_DONE, kind: "pop" },
   { t: 47.0, kind: "whoosh" },
-  { t: 49.2, kind: "pop" },
+  { t: MODE_SWITCH[0], kind: "sweep" },
+  { t: 53.0, kind: "whoosh" },
+  { t: 55.2, kind: "pop" },
 ];

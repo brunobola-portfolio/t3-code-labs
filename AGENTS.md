@@ -52,12 +52,17 @@ Guidance for agents working on T3 Code Labs, a T3 Code theme (one JSON file with
   label and the two shortcut chips. The breadcrumb crumb is `nav[aria-label="Thread breadcrumb"]
   button[aria-label^="New thread in "]`; project folders carry their own `button[aria-label^="New thread in "]` (the
   one-click New pill), so always scope that selector.
+- Project filter: the trigger is `[aria-label^="Filter threads by project:"]` while a filter is on, or `[aria-label^="Projects: "]`
+  in T3 builds since pingdotgg/t3code#33057 (which also drops Add project from the header). The chip prints the name from
+  that label. Its picker's "All projects" row is the only `[data-slot=combobox-item]` with no `button` and a `span` as first
+  child (Add project starts with an `svg`). Base UI opens the picker on press and commits the highlighted row on release.
+  Keep the row exactly under the chip's Clear pill (both at top 5px, right 5px; chip 36px high).
 - New thread screen: the project switcher is `[data-draft-project-trigger]`; "or start without a project" is
   `div:has(>div>h1 [data-draft-project-trigger])>p>button`.
 - Composer strip: `[data-slot=composer-context-strip]` with `[data-composer-context-control]`, the branch
   `[data-slot=combobox-trigger]` (`aria-label="Branch: …"`) and `button[aria-label^="Permissions:"]`.
 - Composer footer: `[data-chat-composer-footer]>div:first-child` (attach button) carries the key hints, shown while
-  `[data-chat-composer-surface]` has focus. The text changes with the state: a new thread (`body:has([data-draft-project-trigger])`), a running agent (the footer holds `button[aria-label="Stop generation"]`, or `Stopping`), and a queued message (`[aria-label^="Queued message"]`).
+  `[data-chat-composer-surface]` has focus. The text changes with the state: a new thread (`body:has([data-draft-project-trigger])`), a running agent (the footer holds a button labelled `Stop generation` or `Stopping`, or `Steer message` / `Queue message` once there is text), and a queued message (`[aria-label^="Queued message"]`).
 - Model picker: `[data-model-picker-content]` (providers `[data-model-picker-provider]`, models
   `[data-slot=combobox-item]`), effort `[data-model-picker-effort] [role=radio]`; the hint footer is `::after` on its parent.
 - Command palette: `[data-command-palette]`, rows `[data-slot=command-item]` (`[data-highlighted]`), footer

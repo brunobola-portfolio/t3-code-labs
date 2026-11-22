@@ -5,13 +5,13 @@ launch film. The UI in every frame is the real T3 Code web app, running on a **d
 
 | File | What it does |
 | --- | --- |
-| `capture.mjs` | Drives the demo web app with Playwright and saves stills and frame sequences to `out/` (theme on and off, dark and light, meters, composer, menu, Usage → Limits, model picker, new thread screen and project picker). |
+| `capture.mjs` | Drives the demo web app with Playwright and saves stills and frame sequences to `out/` (theme on and off, dark and light, meters, composer, menu, Usage → Limits, model picker, new thread screen, project picker and project filter). |
 | `timeline.mjs` | Scene timing shared by the picture and the music. |
 | `audio.mjs` | Synthesizes the soundtrack (pad, arpeggio, bass, soft drums, UI sound effects) into `out/soundtrack.wav`. |
 | `film.html` | The compositor: draws the captured frames, titles and transitions for any time `t`, plus the poster and before/after layouts. |
 | `film.mjs` | Renders `film.html` frame by frame and encodes `../t3-code-labs-film.mp4` (1080p30, H.264 + AAC). `--stills 2,9,17` previews single moments. |
 | `check.mjs` | `npm run check`: opens the demo and confirms every selector the theme relies on still matches (exit code 1 if not). Run it after each T3 Code update. |
-| `gifs.mjs` | Writes `../poster.png`, `../before-after.png`, `../usage-limits.png`, `../composer-picker.png`, `../new-thread.png`, `../before-after.mp4` and the GIFs (cut from the film). |
+| `gifs.mjs` | Writes `../poster.png`, `../before-after.png`, `../usage-limits.png`, `../composer-picker.png`, `../new-thread.png`, `../project-filter.png`, `../before-after.mp4` and the GIFs (cut from the film). |
 
 ## Requirements
 
@@ -43,7 +43,7 @@ set T3_DEMO_HOME=D:\t3-demo\.home
 set T3_DEMO_URL=http://127.0.0.1:3791
 npm run capture      # pairs with the demo server itself (t3 pair)
 npm run audio
-npm run film         # ~4 minutes
+npm run film         # ~6 minutes
 node gifs.mjs
 ```
 

@@ -1,5 +1,6 @@
 // Builds the README media from the film and the compositor:
 //   media/poster.png, media/before-after.png, media/usage-limits.png, media/composer-picker.png, media/new-thread.png,
+//   media/project-filter.png,
 //   media/before-after.mp4 and the preview GIFs.
 // Run after `node film.mjs` (the GIFs are cut from the film so they share its captions).
 import { spawnSync } from "node:child_process";
@@ -36,8 +37,12 @@ await page.screenshot({ path: join(MEDIA, "composer-picker.png"), clip: { x: 0, 
 const NEWTHREAD = { x: 0, y: 0, w: 1500, h: 720 };
 await page.evaluate((c) => window.beforeAfter("dark", "newthread", c), NEWTHREAD);
 await page.screenshot({ path: join(MEDIA, "new-thread.png"), clip: { x: 0, y: 100, width: 1920, height: Math.ceil(100 + 880 * NEWTHREAD.h / NEWTHREAD.w + 60) } });
+// the sidebar with an active project filter: T3's icon only, and the chip with the project's name and Clear
+const FILTER = { x: 0, y: 0, w: 760, h: 520 };
+await page.evaluate((c) => window.beforeAfter("dark", "filter", c), FILTER);
+await page.screenshot({ path: join(MEDIA, "project-filter.png"), clip: { x: 0, y: 100, width: 1920, height: Math.ceil(100 + 880 * FILTER.h / FILTER.w + 60) } });
 await close();
-for (const f of ["poster.png", "before-after.png", "usage-limits.png", "composer-picker.png", "new-thread.png"]) console.log(f, size(join(MEDIA, f)));
+for (const f of ["poster.png", "before-after.png", "usage-limits.png", "composer-picker.png", "new-thread.png", "project-filter.png"]) console.log(f, size(join(MEDIA, f)));
 
 // before/after wipe as a short silent MP4 (plays inline on GitHub when opened)
 const [ba0, ba1] = SCENES.beforeAfter;

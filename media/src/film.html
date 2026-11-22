@@ -203,6 +203,20 @@ async function render(t) {
     if (sw > 0) shot(pp, PICK, dst(PICK), { alpha: o * sw });
     section(t, S.quick, "New threads", "One click into<br>any project", "Hover a project and click <b style='color:#D97757'>New</b>. No picker in the way.");
     $("secTitle").style.top = "330px";
+  } else if (t < S.filter[1]) {
+    // project filter: the chip, the picker opening over it, the cleared sidebar
+    const [a, b] = S.filter;
+    const [chip, open, done] = await Promise.all(["after", "open", "cleared"].map((n) => img(`stills/filter-${n}-dark.png`)));
+    const o = win(t, a, b, .5);
+    const SIDE = { x: 0, y: 60, w: 500, h: 430 }, CHIP = { x: 0, y: 120, w: 336, h: 289 };
+    const z = ease(span(t, a + .5, a + 2)) * (1 - ease(span(t, TL.FILTER_DONE, TL.FILTER_DONE + .9)));
+    const src = mix(SIDE, CHIP, z), d = fit(src, 1360, 560, 780);
+    const k1 = ease(span(t, TL.FILTER_OPEN, TL.FILTER_OPEN + .25)), k2 = ease(span(t, TL.FILTER_DONE, TL.FILTER_DONE + .35));
+    shot(chip, src, d, { alpha: o });
+    if (k1 > 0) shot(open, src, d, { alpha: o * k1, shadow: false });
+    if (k2 > 0) shot(done, src, d, { alpha: o * k2, shadow: false });
+    section(t, S.filter, "Project filter", "See it.<br>Clear it.", "An active filter becomes a chip with the project's name and a <b style='color:#EFA58F'>Clear</b> pill.");
+    $("secTitle").style.top = "330px";
   } else if (t < S.modes[1]) {
     const [a, b] = S.modes, [m0, m1] = TL.MODE_SWITCH;
     const [dk, lt] = await Promise.all([img("stills/thread-after-dark.png"), img("stills/thread-after-light.png")]);

@@ -300,6 +300,24 @@ async function main() {
   await themed(false); await shot("stills/projpicker-before-dark.png"); await themed(true);
   await page.keyboard.press("Escape");
 
+  // project filter: the chip, the picker over it (its Clear pill sits under the chip's), and the cleared sidebar
+  await page.waitForTimeout(400);
+  const filter = page.locator('[aria-label^="Filter threads by project"], [aria-label^="Projects"][data-slot=combobox-trigger]').first();
+  await filter.click();
+  await page.waitForTimeout(500);
+  await page.locator("[data-slot=combobox-item]:has(button)").nth(1).click();
+  await page.waitForTimeout(600);
+  await mouseAway();
+  await shot("stills/filter-after-dark.png");
+  await themed(false); await shot("stills/filter-before-dark.png"); await themed(true);
+  await filter.click({ position: { x: 60, y: 18 } });
+  await page.waitForTimeout(700);
+  await shot("stills/filter-open-dark.png");
+  await page.locator("[data-slot=combobox-item]:not(:has(button)):has([data-slot=combobox-item-content]>span:first-child)").click();
+  await page.waitForTimeout(600);
+  await mouseAway();
+  await shot("stills/filter-cleared-dark.png");
+
   console.log(`captured ${shotN} frames into ${OUT}`);
   await browser.close();
 }

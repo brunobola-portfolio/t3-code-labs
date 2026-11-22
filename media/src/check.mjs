@@ -56,6 +56,14 @@ const CHECKS = {
     ["permissions chip (new thread)", '[data-slot=composer-context-strip] button[aria-label^="Permissions:"]'],
     ["start without a project", "div:has(>div>h1 [data-draft-project-trigger])>p>button"],
   ],
+  filter: [
+    ["project filter chip", 'div:has(>div.shrink-0>[aria-label="New thread"])>div.shrink-0>:is([aria-label^="Filter threads by project:"],[aria-label^="Projects: "])'],
+    ["filter chip icon and pill", ':is([aria-label^="Filter threads by project:"],[aria-label^="Projects: "])>span:first-child~span:last-child'],
+    ["picker below the chip", "[data-slot=combobox-positioner][data-side=bottom]>span"],
+    ["picker All projects row", "[data-slot=combobox-item]:not(:has(button)):has([data-slot=combobox-item-content]>span:first-child)"],
+    ["picker scroll root", "[data-slot=combobox-popup]>div>[data-slot=scroll-area-viewport]"],
+    ["picker search", '[data-slot=combobox-popup] [data-slot=combobox-input]'],
+  ],
   picker: [
     ["model picker", "[data-model-picker-content]"],
     ["model picker providers", "[data-model-picker-provider]"],
@@ -114,6 +122,19 @@ await page.evaluate(() => {
 await page.goto(URL + "/");
 await page.waitForTimeout(2500);
 await run("folders");
+// the project filter chip, and its picker opened over it
+const filter = page.locator('[aria-label^="Filter threads by project"], [aria-label^="Projects"][data-slot=combobox-trigger]').first();
+await filter.click();
+await page.waitForTimeout(500);
+await page.locator("[data-slot=combobox-item]:has(button)").nth(1).click();
+await page.waitForTimeout(500);
+await filter.click({ position: { x: 60, y: 18 } });
+await page.waitForTimeout(600);
+await run("filter");
+await page.locator(CHECKS.filter[3][1]).click();
+await page.waitForTimeout(500);
+const cleared = await page.locator(CHECKS.filter[0][1]).count() === 0;
+results.push({ group: "filter", label: "Clear removes the filter", sel: CHECKS.filter[3][1], n: cleared ? 1 : 0 });
 // the project picker New thread opens
 await page.locator('[aria-label="New thread"]').first().click();
 await page.waitForTimeout(900);
