@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-22
+
+### Added
+- **Project filter**: an active filter becomes a chip with the project's name and a **✕ Clear** pill. Pressing Clear opens
+  T3's picker with its "All projects" row right under the pointer; releasing clears the filter. With a perfectly still
+  mouse, or on touch, it takes a second click.
+- The launch film has a project filter scene (60 s), and the README a before/after image of it. Film, poster and GIFs recaptured.
+- `npm run check` also covers the filter chip and confirms that Clear removes the filter.
+
+### Changed
+- **Contrast**: small accent text, quiet text, counts and the light mode status colours now aim for WCAG AA (4.5:1).
+  New chat uses a deeper clay so its white label reads clearly.
+- The sidebar header wraps instead of using fixed columns, so it stays tidy on T3 builds without the Add project button
+  (pingdotgg/t3code#33057).
+- The New pill on project folders is 24 px high.
+
+### Fixed
+- Composer key hints fell back to the idle text once you typed while the agent was working.
+- Composer key hints no longer appear beside Send when the composer has no attach button.
+- The highlighted row in the Ctrl K palette is in the accent, like the project picker's.
+- "New chat…" no longer wraps in a narrow sidebar.
+
 ## [0.6.0] - 2026-11-20
 
 ### Changed
