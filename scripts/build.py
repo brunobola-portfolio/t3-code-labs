@@ -29,7 +29,7 @@ rep('&::before{content:"T3";font-size:14.5px;font-weight:700;letter-spacing:-.02
     '&::after{content:"Clawd";font-size:14.5px;font-weight:500;letter-spacing:-.01em;color:var(--o)}',
     '&::before{content:"T3 Code";font-size:14.5px;font-weight:650;letter-spacing:-.02em;white-space:nowrap}'
     '&::after{content:"Labs";font-size:9.5px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;'
-    'line-height:1;padding:3px 6px 3px;border-radius:5px;color:var(--o);'
+    'line-height:1;padding:3px 6px 3px;border-radius:5px;color:var(--ot);'
     'background:color-mix(in srgb,var(--o) 13%,transparent);'
     'border:1px solid color-mix(in srgb,var(--o) 32%,transparent)}')
 
@@ -98,7 +98,7 @@ extra = (
 U = 'section[aria-label="Usage limits"] [aria-label$="% left"]'
 X = 'section[aria-label="Context window"] [aria-label$="% used"]'
 def any_pct(base, nums, suffix):
-    return ",".join(f'{base}[aria-label*=": {n}% {suffix}"]' for n in nums)
+    return f"{base}:is(" + ",".join(f'[aria-label*=": {n}% {suffix}"]' for n in nums) + ")"
 u_low, u_mid = range(0, 15), range(15, 35)
 x_high, x_mid = range(85, 101), range(65, 85)
 extra += (
@@ -108,7 +108,7 @@ extra += (
     "&>span:nth-child(2)>span{background:var(--meter)!important;"
     "box-shadow:0 0 8px color-mix(in srgb,var(--meter) 45%,transparent)}"
     "&>span:last-child{color:var(--meter)!important;font-weight:600!important}}"
-    f"{X}{{--meter:var(--o)}}"
+    f"{X}{{--meter:var(--om)}}"
     f"{any_pct(U, u_mid, 'left')},{any_pct(X, x_mid, 'used')}{{--meter:var(--warn)}}"
     f"{any_pct(U, u_low, 'left')},{any_pct(X, x_high, 'used')}{{--meter:var(--err)}}"
     ':is(section[aria-label="Usage limits"],section[aria-label="Context window"])'
@@ -140,11 +140,11 @@ extra += (
     f"{F}[aria-expanded=true]>span.truncate{{font-weight:600!important;color:var(--hi)!important}}"
     f"{F}>span.tabular-nums{{display:inline-flex;align-items:center;justify-content:center;min-width:20px;"
     "height:18px;padding:0 6px;border-radius:999px;font-size:11px!important;font-weight:500;"
-    "background:rgba(127,127,127,.13);color:var(--mu)!important}"
+    "background:rgba(127,127,127,.13);color:var(--mc)!important}"
     f"{F}[aria-expanded=true]>span.tabular-nums{{background:color-mix(in srgb,var(--o) 14%,transparent);"
-    "color:var(--pk,var(--o4))!important}"
+    "color:var(--ot)!important}"
     f"{F}>span:has(>.sr-only){{animation:t3lp 1.6s ease-in-out infinite}}"
-    "@keyframes t3lp{50%{opacity:.3}}"
+    "@keyframes t3lp{50%{opacity:.6}}"
     f"@media (prefers-reduced-motion:reduce){{{F}>span:has(>.sr-only){{animation:none}}}}"
 )
 # Usage → Limits dialog: one card per limit, a bar per account. Each bar is a button whose label reads
@@ -152,8 +152,8 @@ extra += (
 L = '[role=dialog][aria-label=Usage]'
 PB = 'button[aria-label*="% left, "]'
 ROW = f'{L} section>div:has({PB})'
-def pool(nums, base=PB):
-    return ",".join(f'{base}[aria-label*=": {n}% left"]' for n in nums)
+def pool(nums):
+    return any_pct(PB, nums, "left")
 extra += (
     f"{L} section>h2{{font-size:14px!important;font-weight:600!important;letter-spacing:-.01em}}"
     f"{ROW}{{--lvl:var(--ok);border-radius:12px!important;border-color:var(--line)!important;"
@@ -191,17 +191,16 @@ extra += (
 # shortcuts beside the label (Ctrl+N, and Shift for "new thread in the current project", as T3's tooltip says).
 H = 'div:has(>div.shrink-0>[aria-label="New thread"])'
 rep(H + '{flex-direction:column!important;align-items:stretch!important;gap:4px!important;',
-    H + '{display:grid!important;grid-template-columns:minmax(0,1fr) 34px 34px;align-items:center!important;'
-    'gap:6px!important;')
+    H + '{flex-wrap:wrap!important;gap:6px!important;&>div:not(.shrink-0){flex:1 1 90px!important}')
 rep('&>div.shrink-0>[aria-label="Add project"]::after{content:"Add project"}'
     '&>div.shrink-0>:not([aria-label="New thread"],[aria-label="Add project"]){order:-1;&::after{content:"Projects"}}',
-    '&>div.shrink-0>:not([aria-label="New thread"]){justify-content:center!important;padding:0!important;'
+    '&>div.shrink-0>:not([aria-label="New thread"]){flex:0 0 34px;width:34px!important;justify-content:center!important;padding:0!important;'
     'height:36px!important;min-height:36px!important;max-height:36px!important;border-radius:10px!important;'
     'background:var(--sb)!important;border:1px solid var(--sbb)!important;color:var(--mu)!important;'
     '&:hover{color:var(--hi)!important;border-color:rgba(127,127,127,.3)!important}}'
     '&>div.shrink-0>:not([aria-label="New thread"],[aria-label="Add project"]){order:-1}')
 rep('&>div.shrink-0>[aria-label="New thread"]{order:5;margin-top:8px!important;',
-    '&>div.shrink-0>[aria-label="New thread"]{order:5;grid-column:1/-1;margin-top:4px!important;')
+    '&>div.shrink-0>[aria-label="New thread"]{order:5;margin-top:4px!important;--o:#B85A3C;--o2:#A94F33;--o3:#96452C;white-space:nowrap;')
 rep('justify-content:center!important;gap:8px!important;background:var(--o)!important;',
     'justify-content:flex-start!important;padding:0 7px 0 12px!important;gap:8px!important;background:var(--o)!important;')
 KEY = ("font-size:11px;font-weight:500;letter-spacing:0;line-height:1;white-space:nowrap;"
@@ -214,7 +213,52 @@ rep('&::after{content:"New chat"}&::before{content:"Ctrl+N";position:absolute;ri
     f'&::before{{content:"Ctrl N";order:2;margin-left:auto;{KEY}}}'
     '&>span[aria-hidden]{display:inline-flex!important;order:3;position:static!important;width:auto!important;'
     'height:auto!important;translate:none!important;transform:none!important;'
-    f'&::after{{content:"\\21E7  project";{KEY};background:rgba(0,0,0,.08);color:rgba(255,255,255,.72)}}}}')
+    f'&::after{{content:"\\21E7  project";{KEY};background:rgba(0,0,0,.1);color:#fff}}}}')
+
+# Active project filter: the 34px icon becomes a chip above the list: funnel, project name, Clear pill.
+# The name comes from the trigger's label ("Filter threads by project: <name>", or "Projects: <name>" in T3 builds
+# since #33057): its first line, squeezed to 1px text with wide word gaps, holds exactly the prefix and is out of sight.
+# A theme cannot add a click. The picker opens on press and commits the highlighted row on release, so its
+# "All projects" row (the one row without buttons whose icon sits in a span) is placed right under the Clear pill.
+FT = ':is([aria-label^="Filter threads by project:"],[aria-label^="Projects: "])'
+FC = f"{H}>div.shrink-0>{FT}"
+PILL = ("display:flex!important;align-items:center;justify-content:center;width:64px!important;height:24px!important;"
+        "min-height:0!important;padding:0!important;border-radius:6px!important;font-size:11.5px;font-weight:600;"
+        "color:var(--ot)!important;background:color-mix(in srgb,var(--o) 14%,transparent)!important;")
+CLEAR = r'content:"\2715\A0 Clear"'
+HOT = "background:color-mix(in srgb,var(--o) 24%,transparent)!important"
+FUNNEL = icon("<path d='M3 6h18M7 12h10M10 18h4'/>")
+FP = f"body:has({FT}[aria-expanded=true]) [data-slot=combobox-positioner][data-side=bottom]"
+ALL = f"{FP} [data-slot=combobox-item]:not(:has(button)):has([data-slot=combobox-item-content]>span:first-child)"
+extra += (
+    f"{FC}{{order:6!important;flex:1 0 100%;display:block!important;position:relative;width:100%!important;overflow:hidden;"
+    "margin-top:4px!important;padding:0 76px 0 35px!important;text-align:left!important;color:var(--hi)!important;"
+    "border-color:var(--ob)!important;background:color-mix(in srgb,var(--o) 8%,var(--sb))!important;"
+    "&:hover{border-color:color-mix(in srgb,var(--o) 70%,transparent)!important}"
+    "&::first-line{font-size:1px;word-spacing:40px}"
+    "&::before{content:attr(aria-label);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;"
+    "height:68px;margin-top:-34px;font-size:13px;font-weight:500;line-height:34px;text-indent:calc(100% - 150px);"
+    "white-space:normal;word-break:break-word}"
+    "&>span:first-child{position:absolute;left:11px;top:50%;translate:0 -50%;width:15px;height:15px;background:var(--ot);"
+    f"-webkit-mask:{FUNNEL} center/contain no-repeat;&>*{{display:none!important}}}}"
+    f"&>span:last-child{{position:absolute!important;left:auto!important;right:5px;top:5px!important;translate:none!important;"
+    f"pointer-events:auto!important;{PILL}&::after{{{CLEAR}}}&:hover{{{HOT}}}}}}}"
+    f'{H}>div.shrink-0>[aria-label^="Projects: "]::before{{text-indent:calc(100% - 30px)}}'
+    f"{FP}>span{{width:var(--anchor-width)!important;max-width:none!important;top:-40px}}"
+    # capped before the side is chosen, so short windows do not flip it away from the chip
+    f"body:has({FT}[aria-expanded=true]) [data-slot=combobox-popup]{{max-height:min(23rem,calc(100dvh - 210px))!important}}"
+    f"{FP} [data-slot=combobox-popup]>:has([data-slot=combobox-input]){{padding-top:5px!important}}"
+    f"{FP} [data-slot=combobox-input]{{padding-right:64px!important}}"
+    f"{FP} [data-slot=combobox-popup]>div:has(>[data-slot=scroll-area-viewport]){{position:static!important}}"
+    f"{FP} [data-slot=scroll-area-viewport]{{mask-image:none!important}}"
+    f"{FP} [data-slot=scroll-area-scrollbar]{{top:44px!important}}"
+    f"{ALL}{{position:absolute;top:5px;right:5px;{PILL}&>div{{display:none}}&:is(:hover,[data-highlighted]){{{HOT}}}"
+    f"&::after{{{CLEAR};{CLEAR}/\"All projects, clear filter\"}}}}"
+    # the placement rules stop matching when it closes: do not let it jump back during the exit animation
+    '[data-slot=combobox-positioner][data-closed]:has([aria-label="Search projects"]){visibility:hidden}'
+)
+
+rep('[aria-label="Settle thread"]{color:var(--o)!important','[aria-label="Settle thread"]{color:var(--ot)!important')
 
 # Breadcrumb: the project crumb starts a new thread in that project; say so with a "+" on hover.
 extra += (
@@ -227,9 +271,9 @@ extra += (
 # accent pill so it reads as the quick way in.
 extra += (
     'li[data-testid=sidebar-project-folder] button[aria-label^="New thread in "]{'
-    "width:auto!important;height:22px!important;padding:0 7px 0 5px!important;gap:3px!important;"
+    "width:auto!important;height:24px!important;padding:0 7px 0 5px!important;gap:3px!important;"
     "border-radius:6px!important;border-color:transparent!important;font-size:11.5px!important;font-weight:600!important;"
-    "color:var(--o)!important;background:color-mix(in srgb,var(--o) 13%,transparent)!important;"
+    "color:var(--ot)!important;background:color-mix(in srgb,var(--o) 13%,transparent)!important;"
     "& svg{width:13px!important;height:13px!important}"
     '&::after{content:"New";position:static!important;min-width:0!important;min-height:0!important}'
     "&:hover{background:color-mix(in srgb,var(--o) 24%,transparent)!important}}"
@@ -241,14 +285,17 @@ DH = "div:has(>div>h1 [data-draft-project-trigger])"
 extra += (
     '[data-draft-project-trigger]::after{content:"";width:.28em;height:.28em;margin-left:.28em;flex:none;'
     "align-self:center;border:solid currentColor;border-width:0 .07em .07em 0;rotate:45deg;translate:0 -.1em;"
-    "opacity:.55;transition:opacity .15s}"
+    "opacity:.8;transition:opacity .15s}"
     "[data-draft-project-trigger]:hover::after,[data-draft-project-trigger][data-popup-open]::after{opacity:1}"
     f'{DH}>p>button::after{{content:"Ctrl Alt N";margin-left:8px;font-size:10.5px;font-weight:500;'
     "padding:2px 5px;border-radius:5px;border:1px solid var(--line);color:var(--mu2)}"
 )
 
 # Composer: keyboard hints while you type (T3's default bindings), and the permission mode at a glance.
-CF = "[data-chat-composer-footer]>div:first-child"
+CA = "div:first-child:not([data-chat-composer-actions])"
+CF = f"[data-chat-composer-footer]>{CA}"
+# Stop while the box is empty; T3 swaps it for Steer/Queue message once there is text to send
+RUN = '[aria-label="Stop generation"],[aria-label=Stopping],[aria-label="Steer message"],[aria-label="Queue message"]'
 extra += (
     f"{CF}{{display:flex;align-items:center;gap:10px;min-width:0}}"
     # The hints follow the composer's state (T3's default bindings and follow-up mode, steer):
@@ -257,8 +304,8 @@ extra += (
     "white-space:pre;overflow:hidden;text-overflow:ellipsis;font-size:11.5px;color:var(--mu2);"
     "opacity:0;transition:opacity .2s}"
     f"body:has([data-draft-project-trigger]) {CF}::after{{content:\"\\21B5  send   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl \\21B5  send in background   \\B7   Ctrl \\21E7 M  model\"}}"
-    f"[data-chat-composer-footer]:has(button:is([aria-label=\"Stop generation\"],[aria-label=Stopping]))>div:first-child::after{{content:\"\\21B5  steer   \\B7   Ctrl \\21B5  queue   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl \\21E7 M  model\"}}"
-    f"body:has([aria-label^=\"Queued message\"]) [data-chat-composer-footer]:has(button:is([aria-label=\"Stop generation\"],[aria-label=Stopping]))>div:first-child::after{{content:\"\\21B5  steer   \\B7   Ctrl \\21B5  queue   \\B7   Alt \\2191  edit queued   \\B7   \\21E7\\21B5  new line\"}}"
+    f"[data-chat-composer-footer]:has(button:is({RUN}))>{CA}::after{{content:\"\\21B5  steer   \\B7   Ctrl \\21B5  queue   \\B7   \\21E7\\21B5  new line   \\B7   Ctrl \\21E7 M  model\"}}"
+    f"body:has([aria-label^=\"Queued message\"]) [data-chat-composer-footer]:has(button:is({RUN}))>{CA}::after{{content:\"\\21B5  steer   \\B7   Ctrl \\21B5  queue   \\B7   Alt \\2191  edit queued   \\B7   \\21E7\\21B5  new line\"}}"
     f"[data-chat-composer-surface]:focus-within {CF}::after{{opacity:1}}"
     f"@media (max-width:1000px){{{CF}::after{{display:none}}}}"
     '[data-slot=composer-context-strip] button[aria-label^="Permissions:"]{--pm:var(--ok);'
@@ -278,7 +325,7 @@ extra += (
     f"{MP} [data-slot=combobox-item][data-highlighted]{{background:color-mix(in srgb,var(--o) 12%,transparent)!important}}"
     f"{MP} [data-slot=combobox-item][aria-selected=true]{{color:var(--hi)!important;font-weight:600;"
     "box-shadow:inset 2px 0 0 var(--o)}"
-    "[data-model-picker-effort] [role=radio][aria-checked=true]{color:var(--o)!important;font-weight:600}"
+    "[data-model-picker-effort] [role=radio][aria-checked=true]{color:var(--ot)!important;font-weight:600}"
     f"div:has(>{MP})::after{{content:\"\\2191\\2193  move   \\B7   \\21B5  choose   \\B7   Esc  close   \\B7   Ctrl \\21E7 M  toggle\";"
     "display:block;white-space:pre;padding:7px 14px 8px;font-size:11px;color:var(--mu2);"
     "border-top:1px solid var(--line)}"
@@ -289,7 +336,7 @@ extra += (
 P = "[data-command-palette]"
 extra += (
     f"{P} [data-slot=command-item]{{border-radius:8px!important;transition:background-color .1s}}"
-    f"{P} [data-slot=command-item][data-highlighted]{{background:color-mix(in srgb,var(--o) 12%,transparent)!important;"
+    f"{P} [data-slot=command-item][data-highlighted]{{background:linear-gradient(var(--ro),var(--ro))!important;"
     "box-shadow:inset 2px 0 0 var(--o)}"
     f"{P} [data-slot=command-shortcut]{{font-variant-numeric:tabular-nums}}"
     # every other list popup (project switcher, branch picker, menus) gets the same accent row
@@ -305,9 +352,14 @@ extra += "::selection{background:color-mix(in srgb,var(--o) 30%,transparent)}"
 c = c + extra
 assert c.count("{") == c.count("}"), "unbalanced braces"
 
-# error colour token for both appearances
-rep(":root{--sb:", ":root{--err:#E5644E;--warn:#E0A458;--ok:#6DBE8C;--sb:")
-rep(":root:not(.dark){--pk:", ":root:not(.dark){--err:#B5452F;--warn:#A86A1C;--ok:#2F8F5B;--pk:")
+# tokens for both appearances: accent text (ot), context meter (om), chip border (ob), counts (mc), row tint (ro), status
+rep(":root{--sb:", ":root{--ot:#EFA58F;--om:#D97757;--ob:color-mix(in srgb,#D97757 38%,transparent);--mc:#A3A3A3;"
+    "--ro:color-mix(in srgb,#D97757 14%,transparent);--err:#E5644E;--warn:#E0A458;--ok:#6DBE8C;--sb:")
+rep(":root:not(.dark){--pk:", ":root:not(.dark){--ot:#8F3D24;--om:#B5573A;--ob:color-mix(in srgb,#B5573A 80%,transparent);--mc:#5F5E58;"
+    "--err:#B5452F;--warn:#8F5712;--ok:#227A4B;--pk:")
+# quiet text, at AA contrast
+rep("--mu2:#7E7F80", "--mu2:#969696")
+rep("--mu2:#87867F", "--mu2:#6F6E67")
 
 t["name"] = "T3 Code Labs"
 t["css"] = c
