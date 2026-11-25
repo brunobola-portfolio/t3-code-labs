@@ -2,6 +2,8 @@
 
 A premium, observability-first theme for [T3 Code](https://github.com/pingdotgg/t3code). One file, no fork.
 
+**Unofficial theme.** Not affiliated with, endorsed by or maintained by T3 Tools, Inc. "T3 Code" is their trademark.
+
 [![Release](https://img.shields.io/github/v/release/brunobola-portfolio/t3-code-labs?color=D97757&label=release)](https://github.com/brunobola-portfolio/t3-code-labs/releases/latest) [![License: MIT](https://img.shields.io/badge/license-MIT-6DBE8C)](LICENSE) [![T3 Code theme](https://img.shields.io/badge/T3%20Code-theme-191919)](https://github.com/pingdotgg/t3code)
 
 [Português](README.pt.md)
